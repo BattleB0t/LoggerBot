@@ -20,7 +20,8 @@ module.exports = {
     
     if (!args[0]) return message.reply(`The whitelisted version on Hypixel is set to ${preferredMcVersion}.`);
     if (!/1\.(?:20\.[1-6]|1(?:9\.[0-6]|7\.[1-6]|[48]\.[1-4]|[1-35]\.[12]|6\.[1-5])|8(?:\.[1-9])?|20|1[1-9]|9)/.test(args[0]))     return message.reply(`Please enter a valid version of Minecraft; e.g. 1.8, 1.8.9, 1.16.5`).then(async msg => {
-			setTimeout(() => {msg.delete();}, 10000);}); //regex string
+		setTimeout(() => {msg.delete();}, 10000);}); //regex string
+    if (args[0].toUpperCase() == preferredMcVersion) return message.reply(`The whitelisted version on Hypixel was already set to ${preferredMcVersion}!`)
 		  preferredMcVersion = args[0]
 
       funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, alertTimeout)
