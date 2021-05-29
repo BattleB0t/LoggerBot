@@ -5,9 +5,9 @@ const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const hypixelAPIkey = process.env['Hypixel'];
 const client = new Discord.Client
-const { prefix } = require('./userConfig.json');
 const discordAPIkey = process.env['DiscordAPIkey'];
 const userConfig = require('./userConfig.json')
+const prefix = userConfig["prefix"]
 const uuid = userConfig["MinecraftUUID"];
 const logID = "846935851320999936" //userConfig["LogChannel"];
 const alertID = "846935876609376266" //userConfig["NotificationsAndAlerts"];
@@ -43,10 +43,11 @@ client.on('ready', () => {
 		.setTitle('Discord Bot Online')
 		.setThumbnail('https://emoji.gg/assets/emoji/Pingsock.png')
 		.addFields(
-      {name: 'Status', value: 'LoggerBot was restarted and is now online'},
-      { name: 'Link', value: 'https://DiscordLogger.botguy123.repl.co' },
+      {name: 'Online', value: `${client.user.tag} was restarted and is now online`},
+      { name: 'Replit', value: 'https://DiscordLogger.botguy123.repl.co' },
+      { name: 'Status Page', value: 'https://stats.uptimerobot.com/ykm7XuND5n' },
       )
-		.setFooter('Bot by Attituding');
+		.setFooter('Bot by Attituding#6517');
   client.channels.cache.get(`${startupID}`).send(startEmbed)
     .then(console.log("Login Message Sent!"))
     .catch(console.error);
@@ -306,16 +307,17 @@ var readData = funcImports.readAndLoadConfigData();
       var Game_map = (`Map: ${map}`)
       var P_name = (`Name: ${playerName}`)
       var L_playtime = (`Last Playtime was ${daysLastPlaytime}${hmsLastPlaytime} long`)
-      var P_playtime = (`Playtime: ${daysofLastLogin}${hmsLastLogin} - ${secLastLogin} seconds`)
+      var P_playtime = (`Playtime: ${daysofLastLogin}${hmsLastLogin} | ${secLastLogin} seconds`)
       var P_relogtime = (`Last relog time: ${globalThis.relogtime}`)
-      var P_lastlogin = (`Last Login: ${daysofLastLogin}${hmsLastLogin} - ${secLastLogin} seconds ago`)
-      var P_lastlogout = (`Last Logout: ${daysofLastLogout}${hmsLastLogout} - ${secLastLogout} seconds ago`)
+      var P_lastlogin = (`Last Login: ${daysofLastLogin}${hmsLastLogin} | ${secLastLogin} seconds ago`)
+      var P_lastlogout = (`Last Logout: ${daysofLastLogout}${hmsLastLogout} | ${secLastLogout} seconds ago`)
+      
       //i am 100% sure this can be simplified, and this if else ladder looks inefficient.
       if (!status.session.online) { //haha guard clause go brrrr
         const offlineEmbed = new Discord.MessageEmbed()
             .setColor('#555555')
             .setTitle('Offline!')
-            .setDescription(`\`\`\`\n${Log_at}\nStatus: Offline\nMost recent Gametype: ${mostRecentGametype}\n${L_playtime}\nLast Login was at ${offlineLastLogin.toLocaleString()} - ${daysofLastLogin}${hmsLastLogin} ago\nLast Logout was at ${offlineLastLogout.toLocaleString()} - ${daysofLastLogout}${hmsLastLogout} ago\n\`\`\``);
+            .setDescription(`\`\`\`\n${Log_at}\nStatus: Offline\nMost recent Gametype: ${mostRecentGametype}\n${L_playtime}\nLast Login was at ${offlineLastLogin.toLocaleString()} | ${daysofLastLogin}${hmsLastLogin} ago\nLast Logout was at ${offlineLastLogout.toLocaleString()} | ${daysofLastLogout}${hmsLastLogout} ago\n\`\`\``);
             log.send(offlineEmbed);
             return;
       }
