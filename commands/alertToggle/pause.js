@@ -28,6 +28,7 @@ module.exports = {
   if (amount === 'clear') {
     if (!pauseTimeout) return message.reply(`No alert timeout is running!`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
+    
       clearTimeout(globalThis.pauseAction);
       var notificationorange = true;
       var notificationred = true;
@@ -61,6 +62,7 @@ module.exports = {
         var orangetoggle = true;
         var redtoggle = true;
         funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout)
+
        globalThis.pauseAction = setTimeout(() => {
         var notificationorange = true;
         var notificationred = true;
@@ -82,6 +84,7 @@ module.exports = {
         var orangetoggle = true;
         var redtoggle = true;
         funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout)
+
       globalThis.pauseAction = setTimeout(() => {
         var notificationorange = true;
         var notificationred = true;
