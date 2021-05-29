@@ -1,8 +1,13 @@
 const fs = require('fs');
+const { prefix } = require('../../userConfig.json');
 const funcImports = require( __dirname + '../../../functions');
 module.exports = {
 	name: 'language',
-	description: 'Language!',
+  aliases: ['lang'],
+	description: 'Allows you to whitelist a language for use on Hypixel!',
+  usage: `<language> or ${prefix}language current`,
+  args: true,
+  cooldown: 5,
 	execute(message, args, client) {
 
     var readData = funcImports.readAndLoadConfigData();
@@ -20,10 +25,13 @@ module.exports = {
 
     var languages = ["ENGLISH", "GERMAN", "FRENCH", "DUTCH", "SPANISH", "ITALIAN", "CHINESE_SIMPLIFIED", "CHINESE_TRADITIONAL", "PORTUGUESE_BR", "RUSSIAN", "KOREAN", "POLISH", "JAPANESE", "PIRATE", "PORTUGUESE_PT", "GREEK"];
 
-   if (!args[0]) return message.reply(`The whitelisted language on Hypixel is set to ${hypixelLanguage}.`);
+   if (args[0] == 'current') return message.reply(`The whitelisted language on Hypixel is set to ${hypixelLanguage}.`);
+   
    if (!languages.includes(args[0].toUpperCase())) return message.reply(`That doesn't seem to be a valid language! Please choose one of the following: English, German, French, Dutch, Spanish, Italian, Chinese_Simplified, Chinese_Traditional, Portuguese_BR, Russian, Korean, Polish, Japanese, Pirate, Portuguese_PT, or Greek.`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 20000);});
-  if (args[0].toUpperCase() == hypixelLanguage) return message.reply(`The whitelisted language on Hypixel was already set to ${hypixelLanguage}!`)
+
+  if (args[0].toUpperCase() == hypixelLanguage) return message.reply(`The whitelisted language on Hypixel was already set to ${hypixelLanguage}!`).then(async msg => {
+		setTimeout(() => {msg.delete();}, 10000);});
 		var hypixelLanguage = (args[0].toUpperCase());
 
     funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, alertTimeout)

@@ -1,9 +1,13 @@
 const fs = require('fs');
+const { prefix } = require('../../userConfig.json');
 const funcImports = require( __dirname + '../../../functions');
 module.exports = {
 	name: 'pause',
-  usage: '<number> <unit of time>',
-	description: 'Pauses!',
+  aliases: ['p'],
+  usage: `<number> <unit of time> or ${prefix}pause clear`,
+	description: 'Pauses alerts for a set amount of time!',
+  args: true,
+  cooldown: 1,
 	execute(message, args, client) {
 
   var readData = funcImports.readAndLoadConfigData();

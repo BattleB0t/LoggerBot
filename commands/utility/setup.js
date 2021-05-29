@@ -1,7 +1,10 @@
+const { prefix } = require('../../userConfig.json');
 const Discord = require('discord.js');
 module.exports = {
 	name: 'setup',
 	description: 'Provides intructions for setup of the bot!',
+  cooldown: 5,
+  guildOnly: true,
 	execute(message, args, client) {
     const helpEmbed = new Discord.MessageEmbed()
 			.setColor('#AA00AA')

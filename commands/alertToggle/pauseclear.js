@@ -1,8 +1,11 @@
 const fs = require('fs');
+const { prefix } = require('../../userConfig.json');
 const funcImports = require( __dirname + '../../../functions');
 module.exports = {
 	name: 'pauseclear',
-	description: 'Pauseclear!',
+  aliases: ['pclear'],
+	description: 'Clears running alert timeouts!',
+  cooldown: 2,
 	execute(message, args, client) {
     
     var readData = funcImports.readAndLoadConfigData();

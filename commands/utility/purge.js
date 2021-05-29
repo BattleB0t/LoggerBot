@@ -1,6 +1,11 @@
+const { prefix } = require('../../userConfig.json');
 module.exports = {
 	name: 'purge',
 	description: 'Purges messages!',
+  args: true,
+  usage: '<amount of messages to purge>',
+  cooldown: 5,
+  guildOnly: true,
 	execute(message, args, client) {
     		const amount = args[0]
 
