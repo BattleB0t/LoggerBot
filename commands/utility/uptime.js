@@ -1,6 +1,8 @@
+const { prefix } = require('../../userConfig.json');
 module.exports = {
 	name: 'uptime',
-	description: 'Uptime of the bot!',
+	description: 'Shows the uptime of the bot!',
+  cooldown: 1,
 	execute(message, args, client) {
 		    function uptimefunc(uptimeSeconds) {
       let totalSeconds = (client.uptime / 1000);
