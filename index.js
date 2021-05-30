@@ -212,7 +212,7 @@ var readData = funcImports.readAndLoadConfigData();
 			var secLastLogout = Math.round((new Date() - player.player.lastLogout) / 1000);
 			var hmsLastLogout = new Date(Math.round(secLastLogout * 1000)).toISOString().substr(11, 8);
 
-			var secLastPlaytime = (player.player.lastLogout - player.player.lastLogin) / 1000;
+			var secLastPlaytime = Math.round((player.player.lastLogout - player.player.lastLogin) / 1000);
 			var hmsLastPlaytime = new Date(Math.round(secLastPlaytime * 1000)).toISOString().substr(11, 8);
 
 			var offlineLastLogin = new Date(new Date() - (new Date() - player.player.lastLogin));
@@ -256,7 +256,7 @@ var readData = funcImports.readAndLoadConfigData();
                     globalThis.relogtime = (`${roundedRelogTime} seconds`);
                     const shortSessionEmbed = new Discord.MessageEmbed()
                         .setColor('#FFAA00')
-                        .setTitle('Relog detected!')
+                        .setTitle('**Relog detected!**')
                         .setFooter(`Alert at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
                     log.send(shortSessionEmbed);
                     alerts.send(`${playertag}, a relog was detected at ${timestring}. Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
@@ -273,7 +273,7 @@ var readData = funcImports.readAndLoadConfigData();
                     globalThis.executed1 = true;
                     const shortSessionEmbed = new Discord.MessageEmbed()
                         .setColor('#FFAA00')
-                        .setTitle('Short Session detected!')
+                        .setTitle('**Short Session detected!**')
                         .setFooter(`Alert at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
                     log.send(shortSessionEmbed);
                     alerts.send(`${playertag}, a short session was detected at ${timestring}. Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
@@ -291,10 +291,10 @@ var readData = funcImports.readAndLoadConfigData();
                     if (msLastLogin <= 10 && notificationorange == true) { //Sends msg to discord notif on login
                       const loginEmbed = new Discord.MessageEmbed()
                           .setColor('#00AA00')
-                          .setTitle('Login detected!')
+                          .setTitle('**Login detected!**')
                           .setThumbnail(`https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621`)
                         .setFooter(`Alert at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
-                          .setDescription(`\`\`\`\nLogin at ${offlineLastLogin.toLocaleTimeString()} was detected at ${timestring}.\n\`\`\``);
+                          .setDescription(`Login at ${offlineLastLogin.toLocaleTimeString()} was detected at ${timestring}.`);
                         log.send(loginEmbed);
                         alerts.send(`${playertag}, a new login at ${offlineLastLogin.toLocaleTimeString()} was detected at ${timestring}.`, {tts: true});
                         }
@@ -302,10 +302,10 @@ var readData = funcImports.readAndLoadConfigData();
                      if (msLastLogout <= 10 && notificationorange == true) { //Sends msg to discord notif on logout
                       const logoutEmbed = new Discord.MessageEmbed()
                           .setColor('#555555')
-                          .setTitle('Logout detected!')
+                          .setTitle('**Logout detected!**')
                           .setThumbnail(`https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621`)
                         .setFooter(`Alert at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
-                          .setDescription(`\`\`\`\nLogout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}.\n\`\`\``);
+                          .setDescription(`Logout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}.`);
                         log.send(logoutEmbed);
                         alerts.send(`${playertag}, a logout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}.`, {tts: true});
                         } 
@@ -426,7 +426,7 @@ const embed = new Discord.MessageEmbed()
     if (!status.session.online) {
     embed.addFields(
     { name: 'Status', value: `${playerName} is offline` },
-    { name: 'Last Session', value: `Last Gametype: ${mostRecentGametype}\nLast Playtime: ${daysLastPlaytime}${hmsLastPlaytime} long | ${secLastPlaytime} seconds` },
+    { name: 'Last Session', value: `Last Gametype was ${mostRecentGametype}\nLast Playtime was ${daysLastPlaytime}${hmsLastPlaytime} long | ${secLastPlaytime} seconds` },
     { name: 'Last Login and Logout', value: `Last Login was at ${offlineLastLogin.toLocaleString()} | ${daysofLastLogin}${hmsLastLogin} ago\nLast Logout was at ${offlineLastLogout.toLocaleString()} | ${daysofLastLogout}${hmsLastLogout} ago` })
   } else if (status.session.online) {
     embed.addFields(
