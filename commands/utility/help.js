@@ -34,11 +34,11 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 10000);});
 		}
 
-		data.push(`**Name:** ${command.name}`);
+		data.push(`**Name:** ${prefix}${command.name}`);
 
 		if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
 		if (command.description) data.push(`**Description:** ${command.description}`);
-		if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
+		if (command.usage) data.push(`**Usage:** ${command.usage}`);
     if (command.cooldown != undefined) data.push(`**Cooldown:** ${command.cooldown} second(s)`);
     if (command.permissions) data.push(`**Required Permission(s):** ${command.permissions}`);
 

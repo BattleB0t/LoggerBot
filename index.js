@@ -41,13 +41,12 @@ client.on('ready', () => {
     const startEmbed = new Discord.MessageEmbed()
 		.setColor('#23272A')
 		.setTitle('Discord Bot Online')
-		.setThumbnail('https://emoji.gg/assets/emoji/Pingsock.png')
+    .setAuthor('Bot by Attituding#6517', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113', 'https://stats.uptimerobot.com/ykm7XuND5n')
 		.addFields(
       {name: 'Online', value: `${client.user.tag} was restarted and is now online`},
       { name: 'Replit', value: 'https://DiscordLogger.botguy123.repl.co' },
       { name: 'Status Page', value: 'https://stats.uptimerobot.com/ykm7XuND5n' },
       )
-		.setFooter('Bot by Attituding#6517');
   client.channels.cache.get(`${startupID}`).send(startEmbed)
     .then(console.log("Login Message Sent!"))
     .catch(console.error);
@@ -193,22 +192,22 @@ var readData = funcImports.readAndLoadConfigData();
 
             var playerName = player.player.displayname
 
-            var daysofLastLogin = secondsToDLastLogin((new Date() - player.player.lastLogin) / 1000); //Main possible Variables in logs
+            var daysofLastLogin = secondsToDLastLogin((new Date() - player.player.lastLogin) / 1000);
             var daysofLastLogout = secondsToDLastLogout((new Date() - player.player.lastLogout) / 1000);
-                    var daysLastPlaytime = secondsToDLastPlaytime((player.player.lastLogout - player.player.lastLogin) / 1000);
+            var daysLastPlaytime = secondsToDLastPlaytime((player.player.lastLogout - player.player.lastLogin) / 1000);
 
             var mostRecentGametype = player.player.mostRecentGameType
             var currentGametype = status.session.gameType //can only be used when player is online
             var gameMode = status.session.mode
-            var map = status.session.map
+            var map = status.session.map //map of the game, eg: tribute on skywars
 
-            var msLastLogin = (new Date() - player.player.lastLogin) / 1000
-            var timeOfLogin = new Date(player.player.lastLogin).toLocaleTimeString()
-            var dateOfLogin = new Date(player.player.lastLogin).toLocaleDateString()
-            var secLastLogin = Math.round((new Date() - player.player.lastLogin) / 1000);
-	        var hmsLastLogin = new Date(Math.round(secLastLogin * 1000)).toISOString().substr(11, 8);
+      var timeOfLogin = new Date(player.player.lastLogin).toLocaleTimeString()
+      var dateOfLogin = new Date(player.player.lastLogin).toLocaleDateString()
+      var notRoundedLastLogin = (new Date() - player.player.lastLogin) / 1000
+      var secLastLogin = Math.round((new Date() - player.player.lastLogin) / 1000);
+	    var hmsLastLogin = new Date(Math.round(secLastLogin * 1000)).toISOString().substr(11, 8);
 
-            var msLastLogout = (new Date() - player.player.lastLogout) / 1000
+      var notRoundedLastLogout = (new Date() - player.player.lastLogout) / 1000
 			var secLastLogout = Math.round((new Date() - player.player.lastLogout) / 1000);
 			var hmsLastLogout = new Date(Math.round(secLastLogout * 1000)).toISOString().substr(11, 8);
 
@@ -223,7 +222,7 @@ var readData = funcImports.readAndLoadConfigData();
 
 			var hoursLastLogin = new Date(player.player.lastLogin).getHours();
 
-      var relogEventTime = (player.player.lastLogin - player.player.lastLogout) / 1000; //End of main possible Varialbes in logss
+      var relogEventTime = (player.player.lastLogin - player.player.lastLogout) / 1000;
 
 			switch (new Date().getDay()) { //not very efficient, but ig it works
 				case 0:
@@ -250,14 +249,14 @@ var readData = funcImports.readAndLoadConfigData();
 
             function events() {
                 function relogEvent() {
-                if (!executed && notificationorange == true && msLastLogin <= 10 && (relogEventTime < 10 && relogEventTime > 0)) {
+                if (!executed && notificationorange == true && notRoundedLastLogin <= 10 && (relogEventTime < 10 && relogEventTime > 0)) {
                     globalThis.executed = true;
                     var roundedRelogTime = Math.round(relogEventTime * 100) / 100
                     globalThis.relogtime = (`${roundedRelogTime} seconds`);
                     const shortSessionEmbed = new Discord.MessageEmbed()
                         .setColor('#FFAA00')
                         .setTitle('**Relog detected!**')
-                        .setFooter(`Alert at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
+                        .setFooter(`Alert at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
                     log.send(shortSessionEmbed);
                     alerts.send(`${playertag}, a relog was detected at ${timestring}. Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
                     function resetrelogevent() {
@@ -269,12 +268,12 @@ var readData = funcImports.readAndLoadConfigData();
                 return false;
                 }
                 function shortSessionEvent() {
-                if (!executed1 && notificationorange == true && !status.session.online && msLastLogout <= 20 && (secLastPlaytime < 10 && secLastPlaytime > 0)) {
+                if (!executed1 && notificationorange == true && !status.session.online && notRoundedLastLogout <= 20 && (secLastPlaytime < 10 && secLastPlaytime > 0)) {
                     globalThis.executed1 = true;
                     const shortSessionEmbed = new Discord.MessageEmbed()
                         .setColor('#FFAA00')
                         .setTitle('**Short Session detected!**')
-                        .setFooter(`Alert at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
+                        .setFooter(`Alert at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
                     log.send(shortSessionEmbed);
                     alerts.send(`${playertag}, a short session was detected at ${timestring}. Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
                     function resetshortevent() {
@@ -288,23 +287,21 @@ var readData = funcImports.readAndLoadConfigData();
                 
                     if (relogEvent() == true || shortSessionEvent() == true) return;
 
-                    if (msLastLogin <= 10 && notificationorange == true) { //Sends msg to discord notif on login
+                    if (notRoundedLastLogin <= 10 && notificationorange == true) { //Sends msg to discord notif on login
                       const loginEmbed = new Discord.MessageEmbed()
                           .setColor('#00AA00')
                           .setTitle('**Login detected!**')
-                          .setThumbnail(`https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621`)
-                        .setFooter(`Alert at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
+                        .setFooter(`Alert at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
                           .setDescription(`Login at ${offlineLastLogin.toLocaleTimeString()} was detected at ${timestring}.`);
                         log.send(loginEmbed);
                         alerts.send(`${playertag}, a new login at ${offlineLastLogin.toLocaleTimeString()} was detected at ${timestring}.`, {tts: true});
                         }
                   
-                     if (msLastLogout <= 10 && notificationorange == true) { //Sends msg to discord notif on logout
+                     if (notRoundedLastLogout <= 10 && notificationorange == true) { //Sends msg to discord notif on logout
                       const logoutEmbed = new Discord.MessageEmbed()
                           .setColor('#555555')
                           .setTitle('**Logout detected!**')
-                          .setThumbnail(`https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621`)
-                        .setFooter(`Alert at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
+                        .setFooter(`Alert at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
                           .setDescription(`Logout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}.`);
                         log.send(logoutEmbed);
                         alerts.send(`${playertag}, a logout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}.`, {tts: true});
@@ -317,16 +314,18 @@ var readData = funcImports.readAndLoadConfigData();
 if (!status.session.online) {
 	    var embedColor = ('#555555')
 		  var embedTitle = ('**Offline!**')
+      var embedFooter = (`Log at ${datestring} | ${timestring}`)
       var languageAlert = false;
       var versionAlert = false;
       var loginTimeAlert = false;
 
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 	}
 
 if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hoursLastLogin < globalThis.offlinehour) {
 		  var embedColor = ('#AA0000')
 		  var embedTitle = ('**Unusual language, version, and login time detected!**')
+      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
       var languageAlert = true;
       var versionAlert = true;
       var loginTimeAlert = true;
@@ -334,10 +333,11 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		if (notificationred == true) {
 		  alerts.send(`${playertag}, Red Alert! Unusual language, version, and login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
 		}
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 } else if (hypixelLanguage !== userLanguage && hoursLastLogin < globalThis.offlinehour) {
       var embedColor = ('#AA0000')
 		  var embedTitle = ('**Unusual language and login time detected!**')
+      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
       var languageAlert = true;
       var versionAlert = false;
       var loginTimeAlert = true;
@@ -345,10 +345,11 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		if (notificationred == true) {
 		  alerts.send(`${playertag}, Red Alert! Unusual user language and login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
     }
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 } else if (MCversion !== preferredMcVersion && hypixelLanguage !== userLanguage) {
       var embedColor = ('#AA0000')
 		  var embedTitle = ('**Unusual language and version detected!**')
+      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
       var languageAlert = true;
       var versionAlert = true;
       var loginTimeAlert = false;
@@ -356,10 +357,11 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		if (notificationred == true) {
 		  alerts.send(`${playertag}, Red Alert! Unusual user language and version of Minecraft detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
     }
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 } else if (MCversion !== preferredMcVersion && hoursLastLogin < globalThis.offlinehour) {
       var embedColor = ('#FFAA00')
 		  var embedTitle = ('**Unusual version and login time detected!**')
+      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
       var languageAlert = false;
       var versionAlert = true;
       var loginTimeAlert = true;
@@ -367,10 +369,11 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		if (notificationorange == true) {
 		  alerts.send(`${playertag}, Orange Alert! Unusual version of Minecraft and login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
     }
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 } else if (hypixelLanguage !== userLanguage) {
       var embedColor = ('#AA0000')
 		  var embedTitle = ('**Unusual language detected!**')
+      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
       var languageAlert = true;
       var versionAlert = false;
       var loginTimeAlert = false;
@@ -378,10 +381,11 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		if (notificationred == true) {
 		  alerts.send(`${playertag}, Red Alert! Unusual user language detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
     }
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 } else if (hoursLastLogin < globalThis.offlinehour) {
       var embedColor = ('#FFAA00')
 		  var embedTitle = ('**Unusual login time detected!**')
+      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
       var languageAlert = false;
       var versionAlert = false;
       var loginTimeAlert = true;
@@ -389,10 +393,11 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		if (notificationorange == true) {
 		  alerts.send(`${playertag}, Orange Alert! Unusual login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
     }
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 } else if (MCversion !== preferredMcVersion) {
       var embedColor = ('#FFAA00')
 		  var embedTitle = ('**Unusual version detected!**')
+      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
       var languageAlert = false;
       var versionAlert = true;
       var loginTimeAlert = false;
@@ -400,19 +405,21 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		if (notificationorange == true) {
 		  alerts.send(`${playertag}, Orange Alert! Unusual version of Minecraft detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
     }
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 } else {
 	    var embedColor = ('#00AA00')
 		  var embedTitle = ('**Nothing abnormal detected!**')
+      var embedFooter = (`Log at ${datestring} | ${timestring}`)
       var languageAlert = false;
       var versionAlert = false;
       var loginTimeAlert = false;
-    return {embedColor, embedTitle, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 }
   };
 
     var embedData = useData();
     var embedColor = embedData.embedColor,
+    embedFooter = embedData.embedFooter,
     embedTitle = embedData.embedTitle,
     languageAlert = embedData.languageAlert,
     versionAlert = embedData.versionAlert,
@@ -421,18 +428,18 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 const embed = new Discord.MessageEmbed()
 		.setColor(embedColor)
 		.setTitle(embedTitle)
-    .setThumbnail(`https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621`)
-    .setFooter(`Log at ${datestring} | ${timestring}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/Feather_JE3_BE2.png/revision/latest/scale-to-width-down/160?cb=20190430052113')
+    .setFooter(embedFooter, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621')
     if (!status.session.online) {
     embed.addFields(
     { name: 'Status', value: `${playerName} is offline` },
-    { name: 'Last Session', value: `Last Gametype was ${mostRecentGametype}\nLast Playtime was ${daysLastPlaytime}${hmsLastPlaytime} long | ${secLastPlaytime} seconds` },
-    { name: 'Last Login and Logout', value: `Last Login was at ${offlineLastLogin.toLocaleString()} | ${daysofLastLogin}${hmsLastLogin} ago\nLast Logout was at ${offlineLastLogout.toLocaleString()} | ${daysofLastLogout}${hmsLastLogout} ago` })
+    { name: 'Last Session', value: `Last Gametype: ${mostRecentGametype}\nLast Playtime: ${daysLastPlaytime}${hmsLastPlaytime} long` },
+    { name: 'Last Login', value: `Last Login: ${offlineLastLogin.toLocaleString()}\n${daysofLastLogin}${hmsLastLogin} ago` },
+    { name: 'Last Logout', value: `Last Logout: ${offlineLastLogout.toLocaleString()}\n${daysofLastLogout}${hmsLastLogout} ago` })
   } else if (status.session.online) {
     embed.addFields(
 		{ name: 'Status', value: `${playerName} is online` },
     { name: 'Gamemode', value: `Game: ${currentGametype}\nMode: ${gameMode}\nMap: ${map}` },
-    { name: 'Session', value: `Playtime: ${daysofLastLogin}${hmsLastLogin} | ${secLastLogin} seconds\nLast Login: ${daysofLastLogin}${hmsLastLogin} | ${secLastLogin} seconds ago\nLast Logout: ${daysofLastLogout}${hmsLastLogout} | ${secLastLogout} seconds ago` })
+    { name: 'Session', value: `Playtime: ${daysofLastLogin}${hmsLastLogin}\nLast Login: ${daysofLastLogin}${hmsLastLogin}\nLast Logout: ${daysofLastLogout}${hmsLastLogout}` })
     if (globalThis.relogtime !== undefined) embed.addFields(
     { name: 'Relog Time', value: `${globalThis.relogtime}` })
     if (languageAlert) embed.addField(`Unusual Language`, `__${userLanguage}__`, true)
@@ -442,7 +449,7 @@ const embed = new Discord.MessageEmbed()
 		log.send(embed);
 
 		})
-		.catch(error => console.log('Error', error) && consolelog.send('Error:', error)); //Error Checking
+		.catch(error => console.log('Error', error)); //Error Checking
 }
 keepAlive()
 client.login((process.env.TOKEN = discordAPIkey));

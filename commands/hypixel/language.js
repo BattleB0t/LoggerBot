@@ -4,8 +4,8 @@ const funcImports = require( __dirname + '../../../functions');
 module.exports = {
 	name: 'language',
   aliases: ['lang'],
-	description: 'Allows you to whitelist a language for use on Hypixel!',
-  usage: `<language> or ${prefix}language current`,
+	description: 'Allows you to whitelist a language for use on Hypixel! \`${prefix}language <language> bypass\` will allow you to set the language as anything incase additional languages become supported.',
+  usage: `\`${prefix}language <language>\`, \`${prefix}language current\`, \`${prefix}language <language> bypass\``,
   args: true,
   cooldown: 5,
 	execute(message, args, client) {
@@ -26,6 +26,11 @@ module.exports = {
     var languages = ["ENGLISH", "GERMAN", "FRENCH", "DUTCH", "SPANISH", "ITALIAN", "CHINESE_SIMPLIFIED", "CHINESE_TRADITIONAL", "PORTUGUESE_BR", "RUSSIAN", "KOREAN", "POLISH", "JAPANESE", "PIRATE", "PORTUGUESE_PT", "GREEK"];
 
    if (args[0] == 'current') return message.reply(`The whitelisted language on Hypixel is set to ${hypixelLanguage}.`);
+   if (args[1] == 'bypass') {
+      var hypixelLanguage = args[0]
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, alertTimeout)
+      return message.channel.send(`Whitelisted language on Hypixel is set to ${hypixelLanguage}.`)
+    }
    
    if (!languages.includes(args[0].toUpperCase())) return message.reply(`That doesn't seem to be a valid language! Please choose one of the following: English, German, French, Dutch, Spanish, Italian, Chinese_Simplified, Chinese_Traditional, Portuguese_BR, Russian, Korean, Polish, Japanese, Pirate, Portuguese_PT, or Greek.`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 20000);});
