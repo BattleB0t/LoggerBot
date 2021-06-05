@@ -5,6 +5,7 @@ module.exports = {
 	name: 'red',
   aliases: ['ralert', 'r'],
 	description: 'Toggles red alerts!',
+  usage: `\`${prefix}red\``,
   cooldown: 1,
 	execute(message, args, client) {
 

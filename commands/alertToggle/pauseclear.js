@@ -5,6 +5,7 @@ module.exports = {
 	name: 'pauseclear',
   aliases: ['pclear'],
 	description: 'Clears running alert timeouts!',
+  usage: `\`${prefix}pauseclear\``,
   cooldown: 2,
 	execute(message, args, client) {
     

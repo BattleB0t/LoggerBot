@@ -5,6 +5,7 @@ module.exports = {
 	name: 'alert',
   aliases: ['pleaseshutup', 'psu'],
 	description: 'Toggle all alerts!',
+  usage: `\`${prefix}alert\``,
   cooldown: 1,
 	execute(message, args, client) {
 

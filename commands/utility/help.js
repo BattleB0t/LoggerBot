@@ -1,9 +1,10 @@
 const { prefix } = require('../../userConfig.json');
+const Discord = require('discord.js');
 module.exports = {
 	name: 'help',
 	description: 'List all of the commands or info about a specific command.',
 	aliases: ['commands'],
-	usage: '[command name]',
+	usage: `\`${prefix}help <command name>\``,
 	cooldown: 2,
 	execute(message, args) {
 		const data = [];
@@ -12,7 +13,7 @@ module.exports = {
 		if (!args.length) {
 			data.push('Here\'s a list of all available commands:');
 			data.push(commands.map(command => prefix + command.name).join(`, `));
-			data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command, along with aliases that can also execute the same command!`);
+			data.push(`\nYou can send \`${prefix}help <command name>\` to get info on a specific command, along with aliases that can also execute the same command!`);
 
 			return message.author.send(data, { split: true })
 				.then(() => {
@@ -34,14 +35,15 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 10000);});
 		}
 
-		data.push(`**Name:** ${prefix}${command.name}`);
-
-		if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
-		if (command.description) data.push(`**Description:** ${command.description}`);
-		if (command.usage) data.push(`**Usage:** ${command.usage}`);
-    if (command.cooldown != undefined) data.push(`**Cooldown:** ${command.cooldown} second(s)`);
-    if (command.permissions) data.push(`**Required Permission(s):** ${command.permissions}`);
-
-		message.channel.send(data, { split: true });
+    const commandHelp = new Discord.MessageEmbed()
+        .setColor('#7289DA')
+        .setTitle(`${prefix}${command.name}`)
+        .setFooter(`Executed at ${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621');
+		    if (command.description) commandHelp.setDescription(`${command.description}`);
+        if (command.aliases) commandHelp.addField(`Aliases`, `${command.aliases.join(', ')}`);
+        if (command.usage) commandHelp.addField(`Usage`, `${command.usage}`);
+        if (command.cooldown != undefined) commandHelp.addField(`Cooldown`, `${command.cooldown} second(s)`);
+        if (command.permissions) commandHelp.addField(`Required Permission(s)`, `${command.permissions}`);
+message.reply(commandHelp);
 	},
 };

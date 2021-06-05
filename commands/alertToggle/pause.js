@@ -4,7 +4,7 @@ const funcImports = require( __dirname + '../../../functions');
 module.exports = {
 	name: 'pause',
   aliases: ['p'],
-  usage: `<number> <unit of time> or ${prefix}pause clear`,
+  usage: `\`${prefix} <number> <unit of time>\`, \`${prefix}pause clear\``,
 	description: 'Pauses alerts for a set amount of time!',
   args: true,
   cooldown: 1,

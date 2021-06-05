@@ -16,6 +16,10 @@ message.channel.send('Loading..').then(async msg => {
 fetch(`https://status.mojang.com/check`)
     .then(res => res.json())
         .then((mojang) => {
+          if (mojang.hasOwnProperty('error')) {
+            msg.delete();
+            return message.reply('an error occured while fetching info from Mojang. Please report this if this continues.').then(async msg => {setTimeout(() => {msg.delete();}, 10000);});
+        }
     
 var arr = []
 
@@ -29,9 +33,9 @@ arr[6] = mojang[1]["session.minecraft.net"].toUpperCase()
 arr[7] = mojang[6]["textures.minecraft.net"].toUpperCase()
 
 
-a = arr.map(function(item) { return item == 'GREEN' ? ':white_check_mark:' : item; });
+a = arr.map(function(item) { return item == 'GREEN' ? ':green_square:' : item; });
 b = a.map(function(item) { return item == 'YELLOW' ? ':yellow_square:' : item; });
-array = b.map(function(item) { return item == 'RED' ? ':no_entry_sign:' : item; });
+array = b.map(function(item) { return item == 'RED' ? ':red_square:' : item; });
 
 
 const mojangStatus = new Discord.MessageEmbed()

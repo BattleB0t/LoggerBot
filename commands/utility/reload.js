@@ -1,9 +1,10 @@
 const fs = require('fs');
-
+const { prefix } = require('../../userConfig.json');
 module.exports = {
 	name: 'reload',
 	description: 'Reloads a command',
-  aliases: ['rldcmd'],
+  usage: `\`${prefix}reload <command>\``,
+  aliases: ['rld'],
   guildOnly: true,
 	args: true,
   permissions: 'MANAGE_GUILD',

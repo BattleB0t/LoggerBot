@@ -3,7 +3,7 @@ module.exports = {
 	name: 'purge',
 	description: 'Purges messages!',
   args: true,
-  usage: '<amount of messages to purge>',
+  usage: `\`${prefix}purge <amount>\``,
   cooldown: 5,
   guildOnly: true,
 	execute(message, args, client) {
