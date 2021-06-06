@@ -11,6 +11,10 @@ const startupID = "838581014329950279" //userConfig["StartupNotification"];
 const playerID = userConfig["PlayerTagID"]
 const playertag = (`<@${playerID}>`)
 process.env.TZ = userConfig["Timezone"];
+const playerUUID = userConfig["MinecraftUUID"];
+const logID = "846935851320999936" //userConfig["LogChannel"];
+const alertID = "846935876609376266" //userConfig["NotificationsAndAlerts"];
+const hypixelAPIkey = process.env['Hypixel'];
 
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
@@ -25,8 +29,9 @@ var readData = funcImports.readAndLoadConfigData();
     redtoggle = readData.redtoggle,
     epochOfPause = readData.epochOfPause,
     pauseTime = readData.pauseTime,
-    pauseTimeout = readData.pTimeout,
-    alertTimeout = readData.aTimeout;
+    pauseTimeout = readData.pauseTimeout,
+    alertTimeout = readData.alertTimeout,
+    loginTimes = readData.loginTimes;
 
 
 client.on('ready', () => {
@@ -47,7 +52,7 @@ client.on('ready', () => {
 		.setPresence({ activity: { name: '!help | ✔', type: 'COMPETING' }, status: 'dnd' })
 		.then(console.log)
 		.catch(console.error);
-  setInterval(logImport.logFunction, 10000, client);
+  setInterval(logImport.logFunction, 10000, client, playerUUID, hypixelAPIkey, logID, alertID);
 });
 
 const commandFolders = fs.readdirSync('./commands');
@@ -103,9 +108,10 @@ client.on('message', message => {
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	const cooldownAmount = (command.cooldown || 3) * 1000;
+	const cooldownAmount = (command.cooldown || 1) * 1000;
+  var isAdmin = message.channel.permissionsFor(message.author)
 
-	if (timestamps.has(message.author.id)) {
+	if (timestamps.has(message.author.id) && !isAdmin.has(`ADMINISTRATOR`)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
 		if (now < expirationTime) {
@@ -119,7 +125,7 @@ client.on('message', message => {
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 	try {
-		command.execute(message, args);
+		command.execute(message, args, client);
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!').then(async msg => {

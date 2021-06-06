@@ -7,7 +7,7 @@ module.exports = {
 	description: 'Allows you to whitelist a language for use on Hypixel! \`${prefix}language <language> bypass\` will allow you to set the language as anything incase additional languages become supported.',
   usage: `\`${prefix}language <language>\`, \`${prefix}language current\`, \`${prefix}language <language> bypass\``,
   args: true,
-  cooldown: 5,
+  cooldown: 10,
 	execute(message, args, client) {
 
     var readData = funcImports.readAndLoadConfigData();
@@ -21,14 +21,15 @@ module.exports = {
     epochOfPause = readData.epochOfPause,
     pauseTime = readData.pauseTime,
     pauseTimeout = readData.pauseTimeout,
-    alertTimeout = readData.alertTimeout;
+    alertTimeout = readData.alertTimeout,
+    loginTimes = readData.loginTimes;
 
     var languages = ["ENGLISH", "GERMAN", "FRENCH", "DUTCH", "SPANISH", "ITALIAN", "CHINESE_SIMPLIFIED", "CHINESE_TRADITIONAL", "PORTUGUESE_BR", "RUSSIAN", "KOREAN", "POLISH", "JAPANESE", "PIRATE", "PORTUGUESE_PT", "GREEK"];
 
    if (args[0] == 'current') return message.reply(`The whitelisted language on Hypixel is set to ${hypixelLanguage}.`);
    if (args[1] == 'bypass') {
       var hypixelLanguage = args[0]
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, alertTimeout)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
       return message.channel.send(`Whitelisted language on Hypixel is set to ${hypixelLanguage}.`)
     }
    
@@ -39,7 +40,7 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 10000);});
 		var hypixelLanguage = (args[0].toUpperCase());
 
-    funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, alertTimeout)
+    funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
     
     message.channel.send(`Whitelisted language on Hypixel is set to ${hypixelLanguage}.`)
 	},

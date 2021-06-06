@@ -9,10 +9,10 @@ const funcImports = require( __dirname + '../../../functions');
 module.exports = {
 	name: 'recentgames',
   aliases: ['recent'],
-	description: `Shows the 10 most recent games of any player. Games beyond 3 days ago cannot be shown. Doing \`${prefix}recentgames\` without arguments will show your own data.`,
+	description: `Shows the 10 most recent games of any player. Games beyond 3 days ago cannot be shown. Doing \`${prefix}recentgames\` without arguments will show your own data. As this command uses the Slothpixel API over the Hypixel API, the data is slightly delayed and may not be accurate.`,
   usage: `\`${prefix}recentgames\`,\`${prefix}recentgames <player>\``,
   args: false,
-  cooldown: 10,
+  cooldown: 7.5,
 	execute(message, args, client) {
     message.channel.send('Loading..').then(async msg => {
 
@@ -34,7 +34,7 @@ module.exports = {
         var i;
         for (i = 0; i < 10; i++) {
           if (recentData[i]) {
-          recentGamesEmbed.addField(`${recentData[i].gameType} at ${new Date(recentData[i].date).toLocaleTimeString()}, ${new Date(recentData[i].date).toLocaleDateString()}`, `Game Time End: ${new Date(recentData[i].ended).toLocaleTimeString()}\nPlay Time: ${new Date(recentData[i].ended - recentData[i].date).toISOString().substr(11, 8)}\n${recentData[i].mode !== null && recentData[i].mode !== "" ? `Mode: ${recentData[i].mode}\n` : `` }${recentData[i].map !== null && recentData[i].map !== "" ? `Map: ${recentData[i].map}` : `` }`)
+        recentGamesEmbed.addField(`${recentData[i].gameType} at ${new Date(recentData[i].date).toLocaleTimeString()}, ${new Date(recentData[i].date).toLocaleDateString()}`, `${recentData[i].hasOwnProperty('ended') && recentData[i].ended !== null && recentData[i].ended !== "" ? `Game Time End: ${new Date(recentData[i].ended).toLocaleTimeString()}\n` : `Game Time End: In progress\n` }${recentData[i].hasOwnProperty('ended') && recentData[i].ended !== null && recentData[i].ended !== "" ? `Play Time: ${new Date(recentData[i].ended - recentData[i].date).toISOString().substr(11, 8)}\n` : `Play Time: In progress\n` }${recentData[i].mode !== null && recentData[i].mode !== "" ? `Mode: ${recentData[i].mode}\n` : `` }${recentData[i].map !== null && recentData[i].map !== "" ? `Map: ${recentData[i].map}` : `` }`)
         }
     }
     if (!recentData[0]) {

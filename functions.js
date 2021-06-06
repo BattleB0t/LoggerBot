@@ -1,5 +1,5 @@
 const fs = require('fs');
-function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout) {
+function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes) {
     var myOptions = {
     language: hypixelLanguage,
     version: preferredMcVersion,
@@ -10,7 +10,8 @@ function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notif
     rToggle: redtoggle,
     pEpoch: epochOfPause,
     pTime: pauseTime,
-    pTimeout: pauseTimeout
+    pTimeout: pauseTimeout,
+    lTime: loginTimes
       };
 
 var data = JSON.stringify(myOptions);
@@ -37,7 +38,8 @@ function readAndLoadConfigData(){
       redtoggle = savedData.rToggle,
       epochOfPause = savedData.pEpoch,
       pauseTime = savedData.pTime,
-      pauseTimeout = savedData.pTimeout;
+      pauseTimeout = savedData.pTimeout,
+      loginTimes = savedData.lTime;
           return {
         hypixelLanguage,
         preferredMcVersion,
@@ -48,7 +50,8 @@ function readAndLoadConfigData(){
         redtoggle,
         epochOfPause,
         pauseTime,
-        pauseTimeout
+        pauseTimeout,
+        loginTimes
     };
     }
     catch (err) {

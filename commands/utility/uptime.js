@@ -10,8 +10,8 @@ module.exports = {
 			var pureDays = Math.floor(uptimeSeconds / (3600 * 24));
 			var uptimeDays = pureDays > 0 ? pureDays + (pureDays == 1 ? ' day ' : ' days ') : ''; //checks if day or days should be used
       var hmsuptime = new Date(totalSeconds * 1000).toISOString().substr(11, 8)
-			return `Current uptime is ${uptimeDays}${hmsuptime}, or ${roundedNumber} seconds.`;
+			return `:stopwatch: Current uptime is ${uptimeDays}${hmsuptime}, or ${roundedNumber} seconds.`;
 			}
-      message.reply(uptimefunc())
+      message.channel.send(uptimefunc())
 	},
 };

@@ -6,7 +6,7 @@ module.exports = {
 	description: `Allows you to whitelist a version of Minecraft for use on Hypixel! \`${prefix}version <version> bypass\` will allow you to set the version as anything incase the current filter becomes outdated.`,
   usage: `\`${prefix}version <version>\`, \`${prefix}version current\`, \`${prefix}version <version> bypass\``,
   args: true,
-  cooldown: 5,
+  cooldown: 10,
 	execute(message, args, client) {
 
     var readData = funcImports.readAndLoadConfigData();
@@ -20,12 +20,13 @@ module.exports = {
     epochOfPause = readData.epochOfPause,
     pauseTime = readData.pauseTime,
     pauseTimeout = readData.pauseTimeout,
-    alertTimeout = readData.alertTimeout;
+    alertTimeout = readData.alertTimeout,
+    loginTimes = readData.loginTimes;
     
     if (args[0] == 'current') return message.reply(`The whitelisted version on Hypixel is set to ${preferredMcVersion}.`);
     if (args[1] == 'bypass') {
       var preferredMcVersion = args[0]
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, alertTimeout)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
       return message.channel.send(`Whitelisted version of Minecraft on Hypixel is set to ${preferredMcVersion}.`)
     }
 
@@ -36,7 +37,7 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 10000);});
 		  var preferredMcVersion = args[0]
 
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, alertTimeout)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
 
       message.channel.send(`Whitelisted version of Minecraft on Hypixel is set to ${preferredMcVersion}.`)
 	},
