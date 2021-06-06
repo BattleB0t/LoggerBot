@@ -101,6 +101,7 @@ const embed = new Discord.MessageEmbed()
 
 		      })
             .catch((err) => {
+              msg.delete()
                 console.log(err);
       });
     })

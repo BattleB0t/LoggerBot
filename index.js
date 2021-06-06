@@ -7,6 +7,7 @@ const client = new Discord.Client
 const discordAPIkey = process.env['DiscordAPIkey'];
 const userConfig = require('./userConfig.json')
 const prefix = userConfig["prefix"]
+const botOwner = userConfig["BotOwnerID"]
 const startupID = "838581014329950279" //userConfig["StartupNotification"];
 const playerID = userConfig["PlayerTagID"]
 const playertag = (`<@${playerID}>`)
@@ -84,7 +85,15 @@ client.on('message', message => {
 	if (command.permissions) {
 		const authorPerms = message.channel.permissionsFor(message.author);
 		if (!authorPerms || !authorPerms.has(command.permissions)) {
-			return message.reply('You can not do this!').then(async msg => {
+			return message.reply('you can not do this!').then(async msg => {
+		setTimeout(() => {msg.delete();}, 10000);});
+		}
+	}
+
+  if (command.ownerReq) {
+		const authorID = message.author.id
+		if (authorID !== botOwner) {
+			return message.reply('you must be the owner to do this!').then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
 		}
 	}
@@ -109,9 +118,8 @@ client.on('message', message => {
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
 	const cooldownAmount = (command.cooldown || 1) * 1000;
-  var isAdmin = message.channel.permissionsFor(message.author)
 
-	if (timestamps.has(message.author.id) && !isAdmin.has(`ADMINISTRATOR`)) {
+	if (timestamps.has(message.author.id) && message.author.id !== botOwner) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
 		if (now < expirationTime) {

@@ -7,14 +7,14 @@ module.exports = {
   aliases: ['rld'],
   guildOnly: true,
 	args: true,
-  permissions: 'MANAGE_GUILD',
+  ownerReq: true,
 	execute(message, args) {
 		const commandName = args[0].toLowerCase();
 		const command = message.client.commands.get(commandName)
 			|| message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
 		if (!command) {
-			return message.channel.send(`There is no command with name or alias \`${commandName}\`, ${message.author}!`).then(async msg => {
+			return message.channel.send(`There is no command with name or alias \`${prefix}${commandName}\`, ${message.author}!`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
 		}
 

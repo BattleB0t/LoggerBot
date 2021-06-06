@@ -97,39 +97,23 @@ var readData = funcImports.readAndLoadConfigData();
 			var MCversion = player.player.mcVersionRp; //Version of Minecraft
 			var userLanguage = player.player.userLanguage; //Language
 
-			var hoursLastLogin = new Date(player.player.lastLogin).getHours();
-
       var relogEventTime = (player.player.lastLogin - player.player.lastLogout) / 1000;
 
-			switch (new Date().getDay()) {
-				case 0: //sunday
-					var loginTimep1 = loginTimes[0]
-          var loginTimep2 = loginTimes[1]
-					break;
-				case 1: //monday
-					var loginTimep1 = loginTimes[2]
-          var loginTimep2 = loginTimes[3]
-					break;
-				case 2: //tuesday
-					var loginTimep1 = loginTimes[3]
-          var loginTimep2 = loginTimes[5]
-					break;
-				case 3: //wednesday
-					var loginTimep1 = loginTimes[6]
-          var loginTimep2 = loginTimes[7]
-					break;
-				case 4: //thursday
-					var loginTimep1 = loginTimes[8]
-          var loginTimep2 = loginTimes[9]
-					break;
-				case 5: //friday
-					var loginTimep1 = loginTimes[10]
-          var loginTimep2 = loginTimes[11]
-					break;
-				case 6: //saturday
-					var loginTimep1 = loginTimes[12]
-          var loginTimep2 = loginTimes[13]
-			}
+
+          function loginTimeFunc() {
+              var loginTimep1 = loginTimes[0]
+              var loginTimep2 = loginTimes[1]
+              var hoursLastLogin = new Date(player.player.lastLogin).getHours();
+              console.log(loginTimep1, loginTimep2, hoursLastLogin)
+
+                if (loginTimep1 < loginTimep2) {
+                  if (hoursLastLogin >= loginTimep1 && hoursLastLogin <= loginTimep2) return true
+                  return false
+                } else if (loginTimep1 > loginTimep2) {
+                  if (hoursLastLogin >= loginTimep1 || hoursLastLogin <= loginTimep2) return true
+                  return false
+                }
+          }
 
             function events() {
                 function relogEvent() {
@@ -206,7 +190,7 @@ if (!status.session.online) {
     return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
 	}
 
-if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hoursLastLogin >= loginTimep1 && hoursLastLogin <= loginTimep2) {
+if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && loginTimeFunc() == true) {
 		  var embedColor = ('#AA0000')
 		  var embedTitle = ('**Unusual language, version, and login time detected!**')
       var embedFooter = (`Alert at ${datestring} | ${timestring}`)
@@ -218,7 +202,7 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		  alerts.send(`${playertag}, Red Alert! Unusual language, version, and login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
 		}
     return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (hypixelLanguage !== userLanguage && hoursLastLogin >= loginTimep1 && hoursLastLogin <= loginTimep2) {
+} else if (hypixelLanguage !== userLanguage && loginTimeFunc() == true) {
       var embedColor = ('#AA0000')
 		  var embedTitle = ('**Unusual language and login time detected!**')
       var embedFooter = (`Alert at ${datestring} | ${timestring}`)
@@ -242,7 +226,7 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		  alerts.send(`${playertag}, Red Alert! Unusual user language and version of Minecraft detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
     }
     return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (MCversion !== preferredMcVersion && hoursLastLogin >= loginTimep1 && hoursLastLogin <= loginTimep2) {
+} else if (MCversion !== preferredMcVersion && loginTimeFunc() == true) {
       var embedColor = ('#FFAA00')
 		  var embedTitle = ('**Unusual version and login time detected!**')
       var embedFooter = (`Alert at ${datestring} | ${timestring}`)
@@ -266,7 +250,7 @@ if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && hour
 		  alerts.send(`${playertag}, Red Alert! Unusual user language detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
     }
     return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (hoursLastLogin >= loginTimep1 && hoursLastLogin <= loginTimep2) {
+} else if (loginTimeFunc() == true) {
       var embedColor = ('#FFAA00')
 		  var embedTitle = ('**Unusual login time detected!**')
       var embedFooter = (`Alert at ${datestring} | ${timestring}`)
@@ -316,7 +300,7 @@ const embed = new Discord.MessageEmbed()
     if (!status.session.online) {
     embed.addFields(
     { name: 'Status', value: `${playerName} is offline` },
-    { name: 'Last Session', value: `Last Gametype: ${mostRecentGametype}\nLast Playtime: ${daysLastPlaytime}${hmsLastPlaytime} long` },
+    { name: 'Last Session', value: `${player.player.mostRecentGametype !== undefined ? `Game: ${mostRecentGametype}\n` : `` }\nLast Playtime: ${daysLastPlaytime}${hmsLastPlaytime} long` },
     { name: 'Last Login', value: `Last Login: ${offlineLastLogin.toLocaleString()}\n${daysofLastLogin}${hmsLastLogin} ago` },
     { name: 'Last Logout', value: `Last Logout: ${offlineLastLogout.toLocaleString()}\n${daysofLastLogout}${hmsLastLogout} ago` })
   } else if (status.session.online) {

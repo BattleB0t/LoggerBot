@@ -65,7 +65,10 @@ if (!/^[\w+]{1,16}$/gm.test(args[0])) {
             }
           recentGameAPI(response.uuid)
     })
-     .catch(err => console.log(err));
+     .catch((err) => {
+              msg.delete()
+                console.log(err);
+     })
     
     });
 	},
