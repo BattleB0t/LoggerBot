@@ -16,7 +16,7 @@ module.exports = {
 	execute(message, args, client) {
     message.channel.send('Loading..').then(async msg => {
 
-    function recentGameAPI(playerUUID) {
+    function recentGameAPI(playerUUID, playerUsername) {
       fetch(`https://api.slothpixel.me/api/players/${playerUUID}/recentGames`)
         .then(recentData => recentData.json())
         .then((recentData) => {
@@ -27,7 +27,7 @@ module.exports = {
 
       const recentGamesEmbed = new Discord.MessageEmbed()
         .setColor('#7289DA')
-        .setTitle('**Most Recent Games**')
+        .setTitle(`**Most Recent Games - ${playerUsername}**`)
         .setDescription(`Some gametypes like Skyblock will not show up due to limitations with Hypixel's API. Games may take a while to appear here due to use of the Slothpixel API.`)
         .setFooter(`Executed at ${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621');
 
@@ -63,7 +63,7 @@ if (!/^[\w+]{1,16}$/gm.test(args[0])) {
             msg.delete();
             return message.reply('that username doesn\'t seem to be valid.').then(async msg => {setTimeout(() => {msg.delete();}, 10000);});
             }
-          recentGameAPI(response.uuid)
+          recentGameAPI(response.uuid, response.username)
     })
      .catch((err) => {
               msg.delete()

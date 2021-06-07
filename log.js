@@ -28,7 +28,8 @@ var readData = funcImports.readAndLoadConfigData();
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
-    whitelistedGames = readData.whitelistedGames;
+    whitelistedGames = readData.whitelistedGames,
+    blacklistedGames = readData.blacklistedGames;
 
 	fetch(`https://api.hypixel.net/status?uuid=${playerUUID}&key=${hypixelAPIkey}`) //i dont think this is promise based but it works
 		.then(function(response) {
@@ -100,9 +101,15 @@ var readData = funcImports.readAndLoadConfigData();
 
       var relogEventTime = (player.player.lastLogin - player.player.lastLogout) / 1000;
 
+      if (status.session.online) {
+      whitelistedGames.push("limbo", "main", "replay", "tournament", "prototype", "legacy")
+      var whitelistCheck = whitelistedGames.indexOf(currentGametype.toLowerCase())
+      }
+      if (status.session.online) {
+      blacklistedGames.push("limbo", "main", "replay", "tournament", "prototype", "legacy")
+      var blacklistCheck = blacklistedGames.indexOf(currentGametype.toLowerCase())
+      }
 
-      var count = whitelistedGames.push("limbo", "main", "replay", "tournament", "prototype")
-      var gametypeCheck = whitelistedGames.indexOf(currentGametype.toLowerCase())
 
           function loginTimeFunc() {
               var loginTimep1 = loginTimes[0]
@@ -147,7 +154,7 @@ var readData = funcImports.readAndLoadConfigData();
                         .setTitle('**Short Session detected!**')
                         .setFooter(`Alert at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
                     log.send(shortSessionEmbed);
-                    alerts.send(`${playertag}, a short session was detected at ${timestring}. Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
+                    alerts.send(`${playertag}, a short session was detected at ${timestring}. Playtime was ${daysLastPlaytime}${hmsLastPlaytime}. Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
                     function resetshortevent() {
                         globalThis.executed1 = false;
                     }
@@ -200,13 +207,16 @@ var versionAlert = false;
 var loginTimeAlert = false;
 var gametypeAlert = false;
 
-if (gametypeCheck == -1) {
+if (whitelistCheck == -1) {
       var embedColor = ('#FFAA00')
       var isAlert = true
       var gametypeAlert = true;
-
-  if (notificationorange == true) {
-  alerts.send(`${playertag}, Orange Alert! Unusual game type detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
+    if (blacklistCheck !== -1) {
+        if (notificationred == true) {
+      alerts.send(`${playertag}, Red Alert! Blacklisted game type detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
+    }
+  } else if (notificationorange == true) {
+  alerts.send(`${playertag}, Orange Alert! Non-whitelisted game type detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
 }
 }
 if (loginTimeFunc() == true) {
@@ -236,6 +246,12 @@ if (hypixelLanguage !== userLanguage) {
   alerts.send(`${playertag}, Red Alert! Unusual user language detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
 }
 }
+if (blacklistCheck !== -1) {
+      var embedColor = ('#AA0000')
+      var isAlert = true
+      var gametypeAlert = true;
+}
+
 
 return {embedColor, isAlert, languageAlert, versionAlert, loginTimeAlert, gametypeAlert};
   };

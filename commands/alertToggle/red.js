@@ -22,14 +22,15 @@ module.exports = {
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
-    whitelistedGames = readData.whitelistedGames;
+    whitelistedGames = readData.whitelistedGames,
+    blacklistedGames = readData.blacklistedGames;
 
 
 		if (redtoggle == true) {
 			message.channel.send(`Red Alert notifications are now on!`);
 			var notificationred = true;
 			var redtoggle = false;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
 		} else if (redtoggle == false) {
 			message.channel.send(`Red Alert notifications are now off!`);
 			var notificationred = false;
@@ -37,7 +38,7 @@ module.exports = {
       var pauseTimeout = false;
       var pauseTime = 0;
 			var redtoggle = true;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
 		}
 	},
 };

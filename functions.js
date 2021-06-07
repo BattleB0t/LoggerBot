@@ -1,5 +1,5 @@
 const fs = require('fs');
-function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames) {
+function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames) {
     var myOptions = {
     language: hypixelLanguage,
     version: preferredMcVersion,
@@ -12,7 +12,8 @@ function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notif
     pTime: pauseTime,
     pTimeout: pauseTimeout,
     lTime: loginTimes,
-    wGames: whitelistedGames
+    wGames: whitelistedGames,
+    bGames: blacklistedGames
       };
 
 var data = JSON.stringify(myOptions);
@@ -41,7 +42,8 @@ function readAndLoadConfigData(){
       pauseTime = savedData.pTime,
       pauseTimeout = savedData.pTimeout,
       loginTimes = savedData.lTime,
-      whitelistedGames = savedData.wGames;
+      whitelistedGames = savedData.wGames,
+      blacklistedGames = savedData.bGames;
           return {
         hypixelLanguage,
         preferredMcVersion,
@@ -54,7 +56,8 @@ function readAndLoadConfigData(){
         pauseTime,
         pauseTimeout,
         loginTimes,
-        whitelistedGames
+        whitelistedGames,
+        blacklistedGames
     };
     }
     catch (err) {
@@ -111,4 +114,11 @@ function unitType(unit) {
     return {multiple, type};
 }
 
-module.exports = { saveData, readAndLoadConfigData, saveConstants, readConstants, pauseToHMS, unitType };
+function gameAlreadyAdded(whitelistedGames, blacklistedGames) { //checks if whitelist and blacklist have the same values
+  var combinedArrays = whitelistedGames.concat(blacklistedGames);
+
+  return (combinedArrays.length === new Set(combinedArrays).size)
+
+}
+
+module.exports = { saveData, readAndLoadConfigData, saveConstants, readConstants, pauseToHMS, unitType, gameAlreadyAdded };

@@ -3,9 +3,9 @@ const { prefix } = require('../../userConfig.json');
 const Discord = require('discord.js');
 const funcImports = require( __dirname + '../../../functions');
 module.exports = {
-	name: 'whitelist',
-	description: 'Allows you to set whitelisted game to play on Hypixel. Games detected that are not whitelisted will set off an orange alert. Use <https://api.hypixel.net/#section/Introduction/GameTypes> to find the database name of the game.',
-  usage: `\`${prefix}whitelist add/remove <game>\`, \`${prefix}whitelist current\``,
+	name: 'blacklist',
+	description: 'Allows you to set blacklist games on Hypixel. Games detected that are blacklisted will set off a red alert. Use <https://api.hypixel.net/#section/Introduction/GameTypes> to find the database name of the game.',
+  usage: `\`${prefix}blacklist add/remove <game>\`, \`${prefix}blacklist current\``,
   args: true,
   cooldown: 2.5,
 	execute(message, args, client) {
@@ -36,16 +36,16 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 10000);});
 
     if (args[0].toLowerCase() == 'current') {
-      var uppercaseGames = whitelistedGames.map(whitelistedGames => whitelistedGames.toUpperCase());
-      const whitelistedData = new Discord.MessageEmbed()
+      var uppercaseGames = blacklistedGames.map(blacklistedGames => blacklistedGames.toUpperCase());
+      const blacklistedData = new Discord.MessageEmbed()
         .setColor('#7289DA')
-        .setTitle(`Whitelisted Games`)
+        .setTitle(`Blacklisted Games`)
         .setFooter(`Executed at ${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621');
-        whitelistedData.addField(`Your whitelisted game(s)`, `${whitelistedGames === undefined || whitelistedGames == 0 ? `No whitelisted games found!` : `${uppercaseGames.join(`, `)}`}`);
-    return message.reply(whitelistedData)
+        blacklistedData.addField(`Your blacklisted game(s)`, `${blacklistedGames === undefined || blacklistedGames == 0 ? `No blacklisted games found!` : `${uppercaseGames.join(`, `)}`}`);
+    return message.reply(blacklistedData)
     }
 
-    if (args[0].toLowerCase() !== "add" && args[0].toLowerCase() !== "remove") return message.reply(`that isn't a valid instruction! Use \'${prefix}whitelist add <game>\' or \'${prefix}whitelist remove <game>\'`).then(async msg => {
+    if (args[0].toLowerCase() !== "add" && args[0].toLowerCase() !== "remove") return message.reply(`that isn't a valid instruction! Use \'${prefix}help blacklist\` to find valid arguments!`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
 
     if (!args[1]) return message.reply(`you didn't specify any game type! Use this link <https://api.hypixel.net/#section/Introduction/GameTypes> to find the clean name of your game: ${games.join(`, `)}`).then(async msg => {
@@ -55,35 +55,35 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 30000);});
 
     if (args[0].toLowerCase() == 'add') {
-      const duplicationCheck = whitelistedGames.indexOf(args[1].toLowerCase())
+      const duplicationCheck = blacklistedGames.indexOf(args[1].toLowerCase())
       if (duplicationCheck !== -1) return message.reply(`that game type was already added!`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
-      whitelistedGames.push(`${args[1].toLowerCase()}`)
-      if (!funcImports.gameAlreadyAdded(whitelistedGames, blacklistedGames)) return message.reply(`that game was added to the blacklist. You cannot add a game to both.`)
+      blacklistedGames.push(`${args[1].toLowerCase()}`)
+      if (!funcImports.gameAlreadyAdded(whitelistedGames, blacklistedGames)) return message.reply(`that game was added to the whitelist. You cannot add a game to both.`)
         funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
-      var uppercaseGames = whitelistedGames.map(whitelistedGames => whitelistedGames.toUpperCase());
-      const whitelistedData = new Discord.MessageEmbed()
+      var uppercaseGames = blacklistedGames.map(blacklistedGames => blacklistedGames.toUpperCase());
+      const blacklistedData = new Discord.MessageEmbed()
         .setColor('#7289DA')
         .setTitle(`${args[1].toUpperCase()} has been added!`)
         .setFooter(`Executed at ${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621');
-        whitelistedData.addField(`Your whitelisted game(s)`, `${whitelistedGames === undefined || whitelistedGames == 0 ? `No whitelisted games found!` : `${uppercaseGames.join(`, `)}`}`);
-    return message.reply(whitelistedData)
+        blacklistedData.addField(`Your blacklisted game(s)`, `${blacklistedGames === undefined || blacklistedGames == 0 ? `No blacklisted games found!` : `${uppercaseGames.join(`, `)}`}`);
+    return message.reply(blacklistedData)
     }
 
     if (args[0].toLowerCase() == 'remove') {
-      const findAndRemove = whitelistedGames.indexOf(args[1].toLowerCase());
+      const findAndRemove = blacklistedGames.indexOf(args[1].toLowerCase());
         if (findAndRemove > -1) {
-          whitelistedGames.splice(findAndRemove, 1);
-          if (!funcImports.gameAlreadyAdded(whitelistedGames, blacklistedGames)) return message.reply(`that game was added to the blacklist. You cannot add a game to both.`)
+          blacklistedGames.splice(findAndRemove, 1);
+          if (!funcImports.gameAlreadyAdded(whitelistedGames, blacklistedGames)) return message.reply(`that game was added to the whitelist. You cannot add a game to both.`)
         funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
-      var uppercaseGames = whitelistedGames.map(whitelistedGames => whitelistedGames.toUpperCase());
-      const whitelistedData = new Discord.MessageEmbed()
+      var uppercaseGames = blacklistedGames.map(blacklistedGames => blacklistedGames.toUpperCase());
+      const blacklistedData = new Discord.MessageEmbed()
         .setColor('#7289DA')
         .setTitle(`${args[1].toUpperCase()} has been removed!`)
         .setFooter(`Executed at ${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621');
-        whitelistedData.addField(`Your whitelisted game(s)`, `${whitelistedGames === undefined || whitelistedGames == 0 ? `No whitelisted games found!` : `${uppercaseGames.join(`, `)}`}`);
-    return message.reply(whitelistedData)
-        } else return message.reply(`you cannot unwhitelist a game that wasnn\'t already added!`).then(async msg => {
+        blacklistedData.addField(`Your blacklisted game(s)`, `${blacklistedGames === undefined || blacklistedGames == 0 ? `No blacklisted games found!` : `${uppercaseGames.join(`, `)}`}`);
+    return message.reply(blacklistedData)
+        } else return message.reply(`you cannot unblacklist a game that wasnn\'t already added!`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
     
     }  

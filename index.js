@@ -33,7 +33,8 @@ var readData = funcImports.readAndLoadConfigData();
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
-    whitelistedGames = readData.whitelistedGames;
+    whitelistedGames = readData.whitelistedGames,
+    blacklistedGames = readData.blacklistedGames;
 
 
 client.on('ready', () => {

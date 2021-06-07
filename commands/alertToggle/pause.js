@@ -23,7 +23,8 @@ module.exports = {
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
-    whitelistedGames = readData.whitelistedGames;
+    whitelistedGames = readData.whitelistedGames,
+    blacklistedGames = readData.blacklistedGames;
 
   globalThis.pauseAction;
   const amount = args[0];
@@ -41,7 +42,7 @@ module.exports = {
       var notiftoggle = false;
       var orangetoggle = false;
       var redtoggle = false;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
       message.channel.send(`The alert timeout has been cleared!`);
     return;
   }
@@ -65,7 +66,7 @@ module.exports = {
         var notiftoggle = true;
         var orangetoggle = true;
         var redtoggle = true;
-        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
+        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
 
        globalThis.pauseAction = setTimeout(() => {
         var notificationorange = true;
@@ -74,7 +75,7 @@ module.exports = {
         var notiftoggle = false;
         var orangetoggle = false;
         var redtoggle = false;
-        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
+        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
         message.reply(`Alerts have been resumed!`);
   }, pauseTime);
       return;
@@ -87,7 +88,7 @@ module.exports = {
         var notiftoggle = true;
         var orangetoggle = true;
         var redtoggle = true;
-        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
+        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
 
       globalThis.pauseAction = setTimeout(() => {
         var notificationorange = true;
@@ -96,7 +97,7 @@ module.exports = {
         var notiftoggle = false;
         var orangetoggle = false;
         var redtoggle = false;
-        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
+        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
         message.reply(`Alerts have been resumed!`);
   }, pauseTime);
 

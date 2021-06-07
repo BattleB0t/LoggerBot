@@ -45,7 +45,7 @@ module.exports = {
         if (command.aliases) commandHelp.addField(`Aliases`, `${prefix + command.aliases.join(`, ${prefix}`)}`);
         if (command.usage) commandHelp.addField(`Usage`, `${command.usage}`);
         if (command.cooldown != undefined) commandHelp.addField(`Cooldown`, `${command.cooldown} second(s)`);
-        if (command.permissions) commandHelp.addField(`Required Permission(s)`, `${command.permissions}`);
+        if (command.permissions || command.ownerReq) commandHelp.addField(`Required Permission(s)`, `${command.permissions && command.ownerReq ? `${command.permissions}\nBot Owner` : `${command.permissions ? `${command.permissions}` : `Bot Owner` }` }`);
 message.reply(commandHelp);
 	},
 };
