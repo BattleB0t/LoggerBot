@@ -21,12 +21,14 @@ module.exports = {
     pauseTime = readData.pauseTime,
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
-    loginTimes = readData.loginTimes;
+    loginTimes = readData.loginTimes,
+    whitelistedGames = readData.whitelistedGames;
+
     
     if (args[0] == 'current') return message.reply(`The whitelisted version on Hypixel is set to ${preferredMcVersion}.`);
     if (args[1] == 'bypass') {
       var preferredMcVersion = args[0]
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
       return message.channel.send(`Whitelisted version of Minecraft on Hypixel is set to ${preferredMcVersion}.`)
     }
 
@@ -37,7 +39,7 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 10000);});
 		  var preferredMcVersion = args[0]
 
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
 
       message.channel.send(`Whitelisted version of Minecraft on Hypixel is set to ${preferredMcVersion}.`)
 	},

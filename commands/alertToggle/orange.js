@@ -21,12 +21,14 @@ module.exports = {
     pauseTime = readData.pauseTime,
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
-    loginTimes = readData.loginTimes;
+    loginTimes = readData.loginTimes,
+    whitelistedGames = readData.whitelistedGames;
+
 
 		if (orangetoggle == true) {
       var notificationorange = true;
 			var orangetoggle = false;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
 			message.channel.send(`Orange Alert notifications are now on!`);
 		} else if (orangetoggle == false) {
       var notificationorange = false;
@@ -34,7 +36,7 @@ module.exports = {
       var pauseTimeout = false;
       var pauseTime = 0;
 			var orangetoggle = true;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
 			message.channel.send(`Orange Alert notifications are now off!`);
 		}
 	},

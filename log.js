@@ -27,7 +27,8 @@ var readData = funcImports.readAndLoadConfigData();
     pauseTime = readData.pauseTime,
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
-    loginTimes = readData.loginTimes;
+    loginTimes = readData.loginTimes,
+    whitelistedGames = readData.whitelistedGames;
 
 	fetch(`https://api.hypixel.net/status?uuid=${playerUUID}&key=${hypixelAPIkey}`) //i dont think this is promise based but it works
 		.then(function(response) {
@@ -100,11 +101,14 @@ var readData = funcImports.readAndLoadConfigData();
       var relogEventTime = (player.player.lastLogin - player.player.lastLogout) / 1000;
 
 
+      var count = whitelistedGames.push("limbo", "main", "replay", "tournament", "prototype")
+      var gametypeCheck = whitelistedGames.indexOf(currentGametype.toLowerCase())
+
           function loginTimeFunc() {
               var loginTimep1 = loginTimes[0]
               var loginTimep2 = loginTimes[1]
               var hoursLastLogin = new Date(player.player.lastLogin).getHours();
-              console.log(loginTimep1, loginTimep2, hoursLastLogin)
+              // console.log(loginTimep1, loginTimep2, hoursLastLogin)
 
                 if (loginTimep1 < loginTimep2) {
                   if (hoursLastLogin >= loginTimep1 && hoursLastLogin <= loginTimep2) return true
@@ -181,122 +185,73 @@ var readData = funcImports.readAndLoadConfigData();
 
 if (!status.session.online) {
 	    var embedColor = ('#555555')
-		  var embedTitle = ('**Offline!**')
-      var embedFooter = (`Log at ${datestring} | ${timestring}`)
+      var isAlert = false;
       var languageAlert = false;
       var versionAlert = false;
       var loginTimeAlert = false;
+      var gametypeAlert = false;
 
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
+    return {embedColor, isAlert, languageAlert, versionAlert, loginTimeAlert, gametypeAlert};
 	}
 
-if (hypixelLanguage !== userLanguage && MCversion !== preferredMcVersion && loginTimeFunc() == true) {
-		  var embedColor = ('#AA0000')
-		  var embedTitle = ('**Unusual language, version, and login time detected!**')
-      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
-      var languageAlert = true;
-      var versionAlert = true;
-      var loginTimeAlert = true;
+var embedColor = ('#00AA00')
+var languageAlert = false;
+var versionAlert = false;
+var loginTimeAlert = false;
+var gametypeAlert = false;
 
-		if (notificationred == true) {
-		  alerts.send(`${playertag}, Red Alert! Unusual language, version, and login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
-		}
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (hypixelLanguage !== userLanguage && loginTimeFunc() == true) {
-      var embedColor = ('#AA0000')
-		  var embedTitle = ('**Unusual language and login time detected!**')
-      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
-      var languageAlert = true;
-      var versionAlert = false;
-      var loginTimeAlert = true;
-
-		if (notificationred == true) {
-		  alerts.send(`${playertag}, Red Alert! Unusual user language and login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
-    }
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (MCversion !== preferredMcVersion && hypixelLanguage !== userLanguage) {
-      var embedColor = ('#AA0000')
-		  var embedTitle = ('**Unusual language and version detected!**')
-      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
-      var languageAlert = true;
-      var versionAlert = true;
-      var loginTimeAlert = false;
-
-		if (notificationred == true) {
-		  alerts.send(`${playertag}, Red Alert! Unusual user language and version of Minecraft detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
-    }
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (MCversion !== preferredMcVersion && loginTimeFunc() == true) {
+if (gametypeCheck == -1) {
       var embedColor = ('#FFAA00')
-		  var embedTitle = ('**Unusual version and login time detected!**')
-      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
-      var languageAlert = false;
-      var versionAlert = true;
-      var loginTimeAlert = true;
+      var isAlert = true
+      var gametypeAlert = true;
 
-		if (notificationorange == true) {
-		  alerts.send(`${playertag}, Orange Alert! Unusual version of Minecraft and login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
-    }
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (hypixelLanguage !== userLanguage) {
-      var embedColor = ('#AA0000')
-		  var embedTitle = ('**Unusual language detected!**')
-      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
-      var languageAlert = true;
-      var versionAlert = false;
-      var loginTimeAlert = false;
-
-		if (notificationred == true) {
-		  alerts.send(`${playertag}, Red Alert! Unusual user language detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
-    }
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (loginTimeFunc() == true) {
-      var embedColor = ('#FFAA00')
-		  var embedTitle = ('**Unusual login time detected!**')
-      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
-      var languageAlert = false;
-      var versionAlert = false;
-      var loginTimeAlert = true;
-
-		if (notificationorange == true) {
-		  alerts.send(`${playertag}, Orange Alert! Unusual login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
-    }
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else if (MCversion !== preferredMcVersion) {
-      var embedColor = ('#FFAA00')
-		  var embedTitle = ('**Unusual version detected!**')
-      var embedFooter = (`Alert at ${datestring} | ${timestring}`)
-      var languageAlert = false;
-      var versionAlert = true;
-      var loginTimeAlert = false;
-
-		if (notificationorange == true) {
-		  alerts.send(`${playertag}, Orange Alert! Unusual version of Minecraft detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
-    }
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
-} else {
-	    var embedColor = ('#00AA00')
-		  var embedTitle = ('**Nothing abnormal detected!**')
-      var embedFooter = (`Log at ${datestring} | ${timestring}`)
-      var languageAlert = false;
-      var versionAlert = false;
-      var loginTimeAlert = false;
-    return {embedColor, embedTitle, embedFooter, languageAlert, versionAlert, loginTimeAlert};
+  if (notificationorange == true) {
+  alerts.send(`${playertag}, Orange Alert! Unusual game type detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
 }
+}
+if (loginTimeFunc() == true) {
+      var embedColor = ('#FFAA00')
+      var isAlert = true
+      var loginTimeAlert = true;
+  
+  if (notificationorange == true) {
+  alerts.send(`${playertag}, Orange Alert! Unusual login time detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
+}
+}
+if (MCversion !== preferredMcVersion) {
+      var embedColor = ('#FFAA00')
+      var isAlert = true
+      var versionAlert = true;
+
+  if (notificationorange == true) {
+  alerts.send(`${playertag}, Orange Alert! Unusual version of Minecraft detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
+}
+}
+if (hypixelLanguage !== userLanguage) {
+      var embedColor = ('#AA0000')
+      var isAlert = true
+      var languageAlert = true;
+
+  if (notificationred == true) {
+  alerts.send(`${playertag}, Red Alert! Unusual user language detected! Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
+}
+}
+
+return {embedColor, isAlert, languageAlert, versionAlert, loginTimeAlert, gametypeAlert};
   };
 
     var embedData = useData();
     var embedColor = embedData.embedColor,
-    embedFooter = embedData.embedFooter,
-    embedTitle = embedData.embedTitle,
+    isAlert = embedData.isAlert,
     languageAlert = embedData.languageAlert,
     versionAlert = embedData.versionAlert,
-    loginTimeAlert = embedData.loginTimeAlert;
+    loginTimeAlert = embedData.loginTimeAlert,
+    gametypeAlert = embedData.gametypeAlert;
 
 const embed = new Discord.MessageEmbed()
 		.setColor(embedColor)
-		.setTitle(embedTitle)
-    .setFooter(embedFooter, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621')
+		.setTitle(`${status.session.online ? `${isAlert ? `**Unusual activity detected!**` : `**Nothing abnormal detected!**` }` : `**Offline!**` }`)
+    .setFooter(`${isAlert == true ? `Alert at ${datestring} | ${timestring}` : `Log at ${datestring} | ${timestring}` }`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621')
     if (!status.session.online) {
     embed.addFields(
     { name: 'Status', value: `${playerName} is offline` },
@@ -310,9 +265,10 @@ const embed = new Discord.MessageEmbed()
     { name: 'Session', value: `Playtime: ${daysofLastLogin}${hmsLastLogin}\nLast Login: ${daysofLastLogin}${hmsLastLogin}\nLast Logout: ${daysofLastLogout}${hmsLastLogout}` })
     if (globalThis.relogtime !== undefined) embed.addFields(
     { name: 'Relog Time', value: `${globalThis.relogtime}` })
-    if (languageAlert) embed.addField(`Unusual Language`, `__${userLanguage}__`, true)
-    if (loginTimeAlert) embed.addField(`Unusual Login Time`, `__${timeOfLogin}\n${dateOfLogin}__`, true)
-    if (versionAlert) embed.addField(`Unusual Version`, `__${MCversion}__`, true)
+    if (languageAlert) embed.addField(`**Unusual Language**`, `**${userLanguage}**`, true)
+    if (loginTimeAlert) embed.addField(`**Unusual Login Time**`, `**${timeOfLogin}\n${dateOfLogin}**`, true)
+    if (gametypeAlert) embed.addField(`**Unusual Game Type**`, `**${currentGametype}**`, true)
+    if (versionAlert) embed.addField(`**Unusual Version**`, `**${MCversion}**`, true)
 }
 		log.send(embed);
 

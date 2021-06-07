@@ -22,9 +22,11 @@ module.exports = {
     pauseTime = readData.pauseTime,
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
-    loginTimes = readData.loginTimes;
+    loginTimes = readData.loginTimes,
+    whitelistedGames = readData.whitelistedGames;
 
-    var input = message.content.slice(8).toString()
+
+    var input = message.content.slice(9).toString()
     if (args[0] == 'current') {
 const offlineData = new Discord.MessageEmbed()
         .setColor('#7289DA')
@@ -35,7 +37,7 @@ const offlineData = new Discord.MessageEmbed()
   return;
     }
 
-    if (!/^(2[0-3]|1[0-9]|[0-9])\sto\s(2[0-3]|1[0-9]|[0-9])$/gm.test(message.content.slice(8))) return message.reply(`that doesn't seem to be valid! Refer to the proper command usage with \`${prefix}help <command>\``).then(async msg => {
+    if (!/^(2[0-3]|1[0-9]|[0-9])\sto\s(2[0-3]|1[0-9]|[0-9])$/gm.test(message.content.slice(9))) return message.reply(`that doesn't seem to be valid! Refer to the proper command usage with \`${prefix}help <command>\``).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);}); //regex string
 
     var arrayReplace1 = input.replace(/[^\d ]+/gm, "");
@@ -46,8 +48,8 @@ const offlineData = new Discord.MessageEmbed()
         .setColor('#7289DA')
         .setTitle(`Success!`)
         .setFooter(`Executed at ${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621');
-        offlineData.addField(`Blacklisted Login Times`, `${loginTimes[0]} to ${loginTimes[1]}`);
+        offlineData.addField(`Blacklisted Login Times`, `${loginTimes[0]}:00 to ${loginTimes[1]}:59`);
   message.reply(offlineData);
-  funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
+  funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
 	},
 };

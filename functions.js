@@ -1,5 +1,5 @@
 const fs = require('fs');
-function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes) {
+function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames) {
     var myOptions = {
     language: hypixelLanguage,
     version: preferredMcVersion,
@@ -11,7 +11,8 @@ function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notif
     pEpoch: epochOfPause,
     pTime: pauseTime,
     pTimeout: pauseTimeout,
-    lTime: loginTimes
+    lTime: loginTimes,
+    wGames: whitelistedGames
       };
 
 var data = JSON.stringify(myOptions);
@@ -39,7 +40,8 @@ function readAndLoadConfigData(){
       epochOfPause = savedData.pEpoch,
       pauseTime = savedData.pTime,
       pauseTimeout = savedData.pTimeout,
-      loginTimes = savedData.lTime;
+      loginTimes = savedData.lTime,
+      whitelistedGames = savedData.wGames;
           return {
         hypixelLanguage,
         preferredMcVersion,
@@ -51,7 +53,41 @@ function readAndLoadConfigData(){
         epochOfPause,
         pauseTime,
         pauseTimeout,
-        loginTimes
+        loginTimes,
+        whitelistedGames
+    };
+    }
+    catch (err) {
+      console.log('There was an error parsing the JSON.')
+      console.log(err);
+}};
+
+function saveConstants(language, gametypes) {
+    var constants = {
+    languages: language,
+    gametypes: gametypes
+      };
+
+var data = JSON.stringify(constants);
+
+fs.writeFile(__dirname + '/constants.json', data, function (err) {
+  if (err) {
+    console.log('There has been an error saving your data.');
+    console.log(err.message);
+    return;
+  }
+});
+}
+
+function readConstants(){
+    var data = fs.readFileSync('./constants.json');
+    try {
+      savedData = JSON.parse(data);
+      var languages = savedData.languages,
+      gametypes = savedData.gametypes;
+          return {
+        languages,
+        gametypes
     };
     }
     catch (err) {
@@ -75,4 +111,4 @@ function unitType(unit) {
     return {multiple, type};
 }
 
-module.exports = { saveData, readAndLoadConfigData, pauseToHMS, unitType };
+module.exports = { saveData, readAndLoadConfigData, saveConstants, readConstants, pauseToHMS, unitType };

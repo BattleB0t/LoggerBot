@@ -21,7 +21,9 @@ module.exports = {
     pauseTime = readData.pauseTime,
     pauseTimeout = readData.pauseTimeout,
     alertTimeout = readData.alertTimeout,
-    loginTimes = readData.loginTimes;
+    loginTimes = readData.loginTimes,
+    whitelistedGames = readData.whitelistedGames;
+
 
   if (!pauseTimeout) return message.reply(`No alert timeout is running!`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
@@ -33,7 +35,7 @@ module.exports = {
       var notiftoggle = false;
       var orangetoggle = false;
       var redtoggle = false;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames)
       message.channel.send(`The alert timeout has been cleared!`);
 	},
 };
