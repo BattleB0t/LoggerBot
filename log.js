@@ -102,27 +102,25 @@ var readData = funcImports.readAndLoadConfigData();
       var relogEventTime = (player.player.lastLogin - player.player.lastLogout) / 1000;
 
       if (status.session.online) {
-      whitelistedGames.push("limbo", "main", "replay", "tournament", "prototype", "legacy")
+      var count = whitelistedGames.push("limbo", "main", "replay", "tournament", "prototype", "legacy")
       var whitelistCheck = whitelistedGames.indexOf(currentGametype.toLowerCase())
       }
       if (status.session.online) {
-      blacklistedGames.push("limbo", "main", "replay", "tournament", "prototype", "legacy")
       var blacklistCheck = blacklistedGames.indexOf(currentGametype.toLowerCase())
       }
 
 
           function loginTimeFunc() {
-              var loginTimep1 = loginTimes[0]
-              var loginTimep2 = loginTimes[1]
+              var loginTimep1 = loginTimes[0] * 1// 13
+              var loginTimep2 = loginTimes[1] * 1// 8
               var hoursLastLogin = new Date(player.player.lastLogin).getHours();
-              // console.log(loginTimep1, loginTimep2, hoursLastLogin)
 
                 if (loginTimep1 < loginTimep2) {
-                  if (hoursLastLogin >= loginTimep1 && hoursLastLogin <= loginTimep2) return true
-                  return false
+                  if (hoursLastLogin >= loginTimep1 && hoursLastLogin <= loginTimep2) return true;
+                  return false;
                 } else if (loginTimep1 > loginTimep2) {
-                  if (hoursLastLogin >= loginTimep1 || hoursLastLogin <= loginTimep2) return true
-                  return false
+                  if (hoursLastLogin >= loginTimep1 || hoursLastLogin <= loginTimep2) return true;
+                  return false;
                 }
           }
 
@@ -153,6 +151,7 @@ var readData = funcImports.readAndLoadConfigData();
                         .setColor('#FFAA00')
                         .setTitle('**Short Session detected!**')
                         .setFooter(`Alert at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
+                        .setDescription('Playtime was ${daysLastPlaytime}${hmsLastPlaytime}.')
                     log.send(shortSessionEmbed);
                     alerts.send(`${playertag}, a short session was detected at ${timestring}. Playtime was ${daysLastPlaytime}${hmsLastPlaytime}. Please ensure your account is secure. <https://bit.ly/3f7gdBf>`, {tts: true});
                     function resetshortevent() {
@@ -181,7 +180,7 @@ var readData = funcImports.readAndLoadConfigData();
                           .setColor('#555555')
                           .setTitle('**Logout detected!**')
                         .setFooter(`Alert at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
-                          .setDescription(`A logout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}.`);
+                          .setDescription(`A logout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}. Playtime was ${daysLastPlaytime}${hmsLastPlaytime}`);
                         log.send(logoutEmbed);
                         alerts.send(`${playertag}, a logout at ${offlineLastLogout.toLocaleTimeString()} was detected. Playtime was ${daysLastPlaytime}${hmsLastPlaytime}`, {tts: true});
                         } 

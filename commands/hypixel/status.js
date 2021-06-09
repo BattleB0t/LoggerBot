@@ -88,7 +88,8 @@ const embed = new Discord.MessageEmbed()
     { name: 'Status', value: `${playerName} is offline` },
     { name: 'Last Session', value: `${player[0].last_game !== null && player[0].last_game !== "" ? `Last Gametype: ${mostRecentGametype}\n` : `` }Last Playtime: ${daysLastPlaytime}${hmsLastPlaytime} long` },
     { name: 'Last Login', value: `Last Login: ${offlineLastLogin.toLocaleString()}\n${daysofLastLogin}${hmsLastLogin} ago` },
-    { name: 'Last Logout', value: `Last Logout: ${offlineLastLogout.toLocaleString()}\n${daysofLastLogout}${hmsLastLogout} ago` })
+    { name: 'Last Logout', value: `Last Logout: ${offlineLastLogout.toLocaleString()}\n${daysofLastLogout}${hmsLastLogout} ago` },
+    { name: 'Settings', value: `Language: ${userLanguage}\n${player[0].mc_version !== null ? `Version: ${MCversion}` : `Version: Unknown` }` })
   } else if (player[0].online) {
     embed.addFields(
 		{ name: 'Status', value: `${playerName} is online` },
