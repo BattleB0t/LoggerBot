@@ -13,9 +13,9 @@ const playerID = userConfig["PlayerTagID"]
 const playertag = (`<@${playerID}>`)
 process.env.TZ = userConfig["Timezone"];
 const playerUUID = userConfig["MinecraftUUID"];
-const logID = "846935851320999936" //userConfig["LogChannel"];
-const alertID = "846935876609376266" //userConfig["NotificationsAndAlerts"];
-const hypixelAPIkey = process.env['Hypixel'];
+const logID = "852333414610501633" //userConfig["LogChannel"];
+const alertID = "852333464485494874" //userConfig["NotificationsAndAlerts"];
+const hypixelAPIkey = process.env['HypixelAPIkey'];
 
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
