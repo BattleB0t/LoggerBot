@@ -48,7 +48,9 @@ module.exports = {
         }
 
         var languagesNew = language()
+        languagesNew.push("UNDEFINED")
         var gametypesNew = gametypes()
+        gametypesNew.push("UNDEFINED")
 
 funcImports.saveConstants(languagesNew, gametypesNew)
 message.channel.send('Complete. Checked/Updated Language and Gametype.')

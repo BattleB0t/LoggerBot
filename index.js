@@ -138,7 +138,7 @@ client.on('message', message => {
 		command.execute(message, args, client);
 	} catch (error) {
 		console.error(error);
-		message.reply('there was an error trying to execute that command!').then(async msg => {
+		message.reply(`there was an error trying to execute that command! Please report this to the bot owner! Error: ${error}`, { split: true }).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
 	}
 });

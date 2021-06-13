@@ -10,7 +10,7 @@ module.exports = {
 	name: 'recentgames',
   aliases: ['recent'],
 	description: `Shows the 10 most recent games of any player. Games beyond 3 days ago cannot be shown. Doing \`${prefix}recentgames\` without arguments will show your own data. As this command uses the Slothpixel API over the Hypixel API, the data is slightly delayed and may not be accurate.`,
-  usage: `\`${prefix}recentgames\`,\`${prefix}recentgames <player>\``,
+  usage: `\`${prefix}recentgames\`,\`${prefix}recentgames <IGN or UUID>\``,
   args: false,
   cooldown: 7.5,
 	execute(message, args, client) {
@@ -34,7 +34,7 @@ module.exports = {
         var i;
         for (i = 0; i < 10; i++) {
           if (recentData[i]) {
-        recentGamesEmbed.addField(`${recentData[i].gameType} at ${new Date(recentData[i].date).toLocaleTimeString()}, ${new Date(recentData[i].date).toLocaleDateString()}`, `${recentData[i].hasOwnProperty('ended') && recentData[i].ended !== null && recentData[i].ended !== "" ? `Game Time End: ${new Date(recentData[i].ended).toLocaleTimeString()}\n` : `Game Time End: In progress\n` }${recentData[i].hasOwnProperty('ended') && recentData[i].ended !== null && recentData[i].ended !== "" ? `Play Time: ${new Date(recentData[i].ended - recentData[i].date).toISOString().substr(11, 8)}\n` : `Play Time Elapsed: ${new Date(new Date() - recentData[i].date).toISOString().substr(11, 8)}\n` }${recentData[i].mode !== null && recentData[i].mode !== "" ? `Mode: ${recentData[i].mode}\n` : `` }${recentData[i].map !== null && recentData[i].map !== "" ? `Map: ${recentData[i].map}` : `` }`)
+        recentGamesEmbed.addField(`${recentData[i].gameType} at ${new Date(recentData[i].date).toLocaleTimeString()}, ${new Date(recentData[i].date).toLocaleDateString()}`, `${recentData[i].hasOwnProperty('ended') && recentData[i].ended ? `Game Time End: ${new Date(recentData[i].ended).toLocaleTimeString()}\n` : `Game Time End: In progress\n` }${recentData[i].hasOwnProperty('ended') && recentData[i].ended ? `Play Time: ${new Date(recentData[i].ended - recentData[i].date).toISOString().substr(11, 8)}\n` : `Play Time Elapsed: ${new Date(new Date() - recentData[i].date).toISOString().substr(11, 8)}\n` }${recentData[i].mode ? `Mode: ${recentData[i].mode}\n` : `` }${recentData[i].map ? `Map: ${recentData[i].map}` : `` }`)
         }
     }
     if (!recentData[0]) {
@@ -51,7 +51,7 @@ if (!args[0]) {
     return;
     }
 
-if (!/^[\w+]{1,16}$/gm.test(args[0])) {
+if (!/(^[\w+]{1,16}$)|(^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$)/ig.test(args[0])) {
   msg.delete();
   return message.reply(`that doesn't seem to be a valid Minecraft username!`).then(async msg => {setTimeout(() => {msg.delete();}, 10000);});
   }

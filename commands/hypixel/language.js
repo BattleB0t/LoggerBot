@@ -32,11 +32,6 @@ module.exports = {
     gametypes = readData.gametypes;	
 
    if (args[0] == 'current') return message.reply(`The whitelisted language on Hypixel is set to ${hypixelLanguage}.`);
-   if (args[1] == 'bypass') {
-      var hypixelLanguage = args[0]
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
-      return message.channel.send(`Whitelisted language on Hypixel is set to ${hypixelLanguage}.`)
-    }
    
    if (!languages.includes(args[0].toUpperCase())) return message.reply(`That doesn't seem to be a valid language! Please choose one of the following: English, German, French, Dutch, Spanish, Italian, Chinese_Simplified, Chinese_Traditional, Portuguese_BR, Russian, Korean, Polish, Japanese, Pirate, Portuguese_PT, or Greek.`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 20000);});

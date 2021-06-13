@@ -35,6 +35,9 @@ module.exports = {
     if (!/^[a-zA-Z_]+$/.test(args[0])) return message.reply(`you cannot use any characters that are not letters or underscores! `).then(async msg => {
 		setTimeout(() => {msg.delete();}, 10000);});
 
+    if (args[0].toLowerCase() !== "add" && args[0].toLowerCase() !== "remove" && args[0].toLowerCase() !== "current") return message.reply(`that isn't a valid instruction! Use \'${prefix}whitelist add <game>\' or \'${prefix}whitelist remove <game>\'`).then(async msg => {
+		setTimeout(() => {msg.delete();}, 10000);});
+
     if (args[0].toLowerCase() == 'current') {
       var uppercaseGames = whitelistedGames.map(whitelistedGames => whitelistedGames.toUpperCase());
       const whitelistedData = new Discord.MessageEmbed()
@@ -44,9 +47,6 @@ module.exports = {
         whitelistedData.addField(`Your whitelisted game(s)`, `${whitelistedGames === undefined || whitelistedGames == 0 ? `No whitelisted games found!` : `${uppercaseGames.join(`, `)}`}`);
     return message.reply(whitelistedData)
     }
-
-    if (args[0].toLowerCase() !== "add" && args[0].toLowerCase() !== "remove") return message.reply(`that isn't a valid instruction! Use \'${prefix}whitelist add <game>\' or \'${prefix}whitelist remove <game>\'`).then(async msg => {
-		setTimeout(() => {msg.delete();}, 10000);});
 
     if (!args[1]) return message.reply(`you didn't specify any game type! Use this link <https://api.hypixel.net/#section/Introduction/GameTypes> to find the clean name of your game: ${games.join(`, `)}`).then(async msg => {
 		setTimeout(() => {msg.delete();}, 30000);});
