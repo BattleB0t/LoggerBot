@@ -14,13 +14,6 @@ module.exports = {
     preferredMcVersion = readData.preferredMcVersion,
     notificationorange = readData.notificationorange,
     notificationred = readData.notificationred,
-    notiftoggle = readData.notiftoggle,
-    orangetoggle = readData.orangetoggle,
-    redtoggle = readData.redtoggle,
-    epochOfPause = readData.epochOfPause,
-    pauseTime = readData.pauseTime,
-    pauseTimeout = readData.pauseTimeout,
-    alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
     whitelistedGames = readData.whitelistedGames,
     blacklistedGames = readData.blacklistedGames;
@@ -40,7 +33,7 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 10000);});
 		  var preferredMcVersion = args[0]
 
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames)
 
       message.channel.send(`Whitelisted version of Minecraft on Hypixel is set to ${preferredMcVersion}.`)
 	},

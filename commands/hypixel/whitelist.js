@@ -15,13 +15,6 @@ module.exports = {
     preferredMcVersion = readData.preferredMcVersion,
     notificationorange = readData.notificationorange,
     notificationred = readData.notificationred,
-    notiftoggle = readData.notiftoggle,
-    orangetoggle = readData.orangetoggle,
-    redtoggle = readData.redtoggle,
-    epochOfPause = readData.epochOfPause,
-    pauseTime = readData.pauseTime,
-    pauseTimeout = readData.pauseTimeout,
-    alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
     whitelistedGames = readData.whitelistedGames,
     blacklistedGames = readData.blacklistedGames;
@@ -60,7 +53,7 @@ module.exports = {
 		setTimeout(() => {msg.delete();}, 10000);});
       whitelistedGames.push(`${args[1].toLowerCase()}`)
       if (!funcImports.gameAlreadyAdded(whitelistedGames, blacklistedGames)) return message.reply(`that game was added to the blacklist. You cannot add a game to both.`)
-        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
+        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames)
       var uppercaseGames = whitelistedGames.map(whitelistedGames => whitelistedGames.toUpperCase());
       const whitelistedData = new Discord.MessageEmbed()
         .setColor('#7289DA')
@@ -75,7 +68,7 @@ module.exports = {
         if (findAndRemove > -1) {
           whitelistedGames.splice(findAndRemove, 1);
           if (!funcImports.gameAlreadyAdded(whitelistedGames, blacklistedGames)) return message.reply(`that game was added to the blacklist. You cannot add a game to both.`)
-        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
+        funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames)
       var uppercaseGames = whitelistedGames.map(whitelistedGames => whitelistedGames.toUpperCase());
       const whitelistedData = new Discord.MessageEmbed()
         .setColor('#7289DA')

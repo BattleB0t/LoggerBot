@@ -20,13 +20,6 @@ var readData = funcImports.readAndLoadConfigData();
     preferredMcVersion = readData.preferredMcVersion,
     notificationorange = readData.notificationorange,
     notificationred = readData.notificationred,
-    notiftoggle = readData.notiftoggle,
-    orangetoggle = readData.orangetoggle,
-    redtoggle = readData.redtoggle,
-    epochOfPause = readData.epochOfPause,
-    pauseTime = readData.pauseTime,
-    pauseTimeout = readData.pauseTimeout,
-    alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
     whitelistedGames = readData.whitelistedGames,
     blacklistedGames = readData.blacklistedGames;
@@ -277,6 +270,15 @@ log.send(embed);
     })
 } catch (error) {
   if (error instanceof TypeError) {
+    console.log(`TypeError: ${error}`)
+    const typeError = new Discord.MessageEmbed()
+            .setColor('#AA0000')
+            .setTitle('**Error In Fetching Data**')
+            .setFooter(`Error at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
+            .setDescription(`This error is expected to happen occasionally. Please report this to the bot owner if this continues for more than a minute.`)
+            .addField('Error', `${error}`);
+          log.send(typeError);
+  } else if (error instanceof FetchError) {
     console.log(`TypeError: ${error}`)
     const typeError = new Discord.MessageEmbed()
             .setColor('#AA0000')

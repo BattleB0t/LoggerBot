@@ -1,16 +1,10 @@
 const fs = require('fs');
-function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames) {
+function saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames) {
     var myOptions = {
     language: hypixelLanguage,
     version: preferredMcVersion,
     orange: notificationorange,
     red: notificationred,
-    nToggle: notiftoggle,
-    oToggle: orangetoggle,
-    rToggle: redtoggle,
-    pEpoch: epochOfPause,
-    pTime: pauseTime,
-    pTimeout: pauseTimeout,
     lTime: loginTimes,
     wGames: whitelistedGames,
     bGames: blacklistedGames
@@ -35,12 +29,6 @@ function readAndLoadConfigData(){
       preferredMcVersion = savedData.version,
       notificationorange = savedData.orange,
       notificationred = savedData.red,
-      notiftoggle = savedData.nToggle,
-      orangetoggle = savedData.oToggle,
-      redtoggle = savedData.rToggle,
-      epochOfPause = savedData.pEpoch,
-      pauseTime = savedData.pTime,
-      pauseTimeout = savedData.pTimeout,
       loginTimes = savedData.lTime,
       whitelistedGames = savedData.wGames,
       blacklistedGames = savedData.bGames;
@@ -49,12 +37,6 @@ function readAndLoadConfigData(){
         preferredMcVersion,
         notificationorange,
         notificationred,
-        notiftoggle,
-        orangetoggle,
-        redtoggle,
-        epochOfPause,
-        pauseTime,
-        pauseTimeout,
         loginTimes,
         whitelistedGames,
         blacklistedGames

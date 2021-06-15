@@ -15,13 +15,6 @@ module.exports = {
     preferredMcVersion = readData.preferredMcVersion,
     notificationorange = readData.notificationorange,
     notificationred = readData.notificationred,
-    notiftoggle = readData.notiftoggle,
-    orangetoggle = readData.orangetoggle,
-    redtoggle = readData.redtoggle,
-    epochOfPause = readData.epochOfPause,
-    pauseTime = readData.pauseTime,
-    pauseTimeout = readData.pauseTimeout,
-    alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
     whitelistedGames = readData.whitelistedGames,
     blacklistedGames = readData.blacklistedGames;
@@ -51,6 +44,6 @@ const offlineData = new Discord.MessageEmbed()
         .setFooter(`Executed at ${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}`, 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/scale-to-width-down/160?cb=20190530235621');
         offlineData.addField(`Blacklisted Login Times`, `${loginTimes[0]}:00 to ${loginTimes[1]}:59`);
   message.reply(offlineData);
-  funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
+  funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames)
 	},
 };

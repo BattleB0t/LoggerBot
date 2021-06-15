@@ -14,31 +14,21 @@ module.exports = {
     preferredMcVersion = readData.preferredMcVersion,
     notificationorange = readData.notificationorange,
     notificationred = readData.notificationred,
-    notiftoggle = readData.notiftoggle,
-    orangetoggle = readData.orangetoggle,
-    redtoggle = readData.redtoggle,
-    epochOfPause = readData.epochOfPause,
-    pauseTime = readData.pauseTime,
-    pauseTimeout = readData.pauseTimeout,
-    alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
     whitelistedGames = readData.whitelistedGames,
     blacklistedGames = readData.blacklistedGames;
 
 
-		if (redtoggle == true) {
-			message.channel.send(`Red Alert notifications are now on!`);
+		if (notificationred == false) {
 			var notificationred = true;
-			var redtoggle = false;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
-		} else if (redtoggle == false) {
-			message.channel.send(`Red Alert notifications are now off!`);
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames)
+      return notificationred.channel.send(`Red Alert notifications are now on!`);
+		} else if (redtoggle == true) {
 			var notificationred = false;
-      clearTimeout(globalThis.pauseAction)
       var pauseTimeout = false;
       var pauseTime = 0;
-			var redtoggle = true;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames)
+      return message.channel.send(`Red Alert notifications are now off!`);
 		}
 	},
 };

@@ -14,31 +14,19 @@ module.exports = {
     preferredMcVersion = readData.preferredMcVersion,
     notificationorange = readData.notificationorange,
     notificationred = readData.notificationred,
-    notiftoggle = readData.notiftoggle,
-    orangetoggle = readData.orangetoggle,
-    redtoggle = readData.redtoggle,
-    epochOfPause = readData.epochOfPause,
-    pauseTime = readData.pauseTime,
-    pauseTimeout = readData.pauseTimeout,
-    alertTimeout = readData.alertTimeout,
     loginTimes = readData.loginTimes,
     whitelistedGames = readData.whitelistedGames,
     blacklistedGames = readData.blacklistedGames;
 
 
-		if (orangetoggle == true) {
+		if (notificationorange == false) {
       var notificationorange = true;
-			var orangetoggle = false;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
-			message.channel.send(`Orange Alert notifications are now on!`);
-		} else if (orangetoggle == false) {
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames)
+			return message.channel.send(`Orange Alert notifications are now on!`);
+		} else if (notificationorange == true) {
       var notificationorange = false;
-      clearTimeout(globalThis.pauseAction)
-      var pauseTimeout = false;
-      var pauseTime = 0;
-			var orangetoggle = true;
-      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, notiftoggle, orangetoggle, redtoggle, epochOfPause, pauseTime, pauseTimeout, loginTimes, whitelistedGames, blacklistedGames)
-			message.channel.send(`Orange Alert notifications are now off!`);
+      funcImports.saveData(hypixelLanguage, preferredMcVersion, notificationorange, notificationred, loginTimes, whitelistedGames, blacklistedGames)
+			return message.channel.send(`Orange Alert notifications are now off!`);
 		}
 	},
 };
