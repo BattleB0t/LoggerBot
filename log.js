@@ -24,7 +24,7 @@ var readData = funcImports.readAndLoadConfigData();
     whitelistedGames = readData.whitelistedGames,
     blacklistedGames = readData.blacklistedGames;
   
-  fetch(`https://api.hypixel.net/status?uuid=${playerUUID}&key=${hypixelAPIkey}`) //i dont think this is promise based but it works
+  fetch(`https://api.hypixel.net/status?uuid=${playerUUID}&key=${hypixelAPIkey}`)
   .then(function(response) {
     return response.json();
   })
@@ -55,11 +55,11 @@ return dDisplay;
 
 var timeOfLogin = new Date(player.player.lastLogin).toLocaleTimeString()
 var dateOfLogin = new Date(player.player.lastLogin).toLocaleDateString()
-var ceilRoundedLastLogin = Math.ceil(new Date() - player.player.lastLogin) / 1000
+var ceilRoundedLastLogin = Math.ceil((new Date() - player.player.lastLogin) / 1000)
 var secLastLogin = Math.round((new Date() - player.player.lastLogin) / 1000);
 var hmsLastLogin = new Date(Math.round(secLastLogin * 1000)).toISOString().substr(11, 8);
 
-var ceilRoundedLastLogout = Math.ceil(new Date() - player.player.lastLogout) / 1000
+var ceilRoundedLastLogout = Math.ceil((new Date() - player.player.lastLogout) / 1000)
 var secLastLogout = Math.round((new Date() - player.player.lastLogout) / 1000);
 var hmsLastLogout = new Date(Math.round(secLastLogout * 1000)).toISOString().substr(11, 8);
 
@@ -157,7 +157,7 @@ var blacklistCheck = blacklistedGames.indexOf(status.session.gameType.toLowerCas
                   .setColor('#555555')
                   .setTitle('**Logout detected!**')
                 .setFooter(`Alert at ${datestring} | ${timestring}`, 'http://www.pngall.com/wp-content/uploads/2017/05/Alert-Download-PNG.png')
-                  .setDescription(`A logout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}. Playtime was ${daysLastPlaytime}${hmsLastPlaytime}`);
+                  .setDescription(`A logout at ${offlineLastLogout.toLocaleTimeString()} was detected at ${timestring}. Playtime was ${daysofLastPlaytime}${hmsLastPlaytime}`);
                 log.send(logoutEmbed);
               if (notificationorange == false) return;
                 alerts.send(`${playertag}, a logout at ${offlineLastLogout.toLocaleTimeString()} was detected. Playtime was ${daysofLastPlaytime}${hmsLastPlaytime}`, {tts: true});
