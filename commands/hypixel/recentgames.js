@@ -34,7 +34,7 @@ module.exports = {
         var i;
         for (i = 0; i < 10; i++) {
           if (recentData[i]) {
-        recentGamesEmbed.addField(`${recentData[i].gameType} at ${new Date(recentData[i].date).toLocaleTimeString()}, ${new Date(recentData[i].date).toLocaleDateString()}`, `${recentData[i].hasOwnProperty('ended') && recentData[i].ended ? `Game Time End: ${new Date(recentData[i].ended).toLocaleTimeString()}\n` : `Game Time End: In progress\n` }${recentData[i].hasOwnProperty('ended') && recentData[i].ended ? `Play Time: ${new Date(recentData[i].ended - recentData[i].date).toISOString().substr(11, 8)}\n` : `Play Time Elapsed: ${new Date(new Date() - recentData[i].date).toISOString().substr(11, 8)}\n` }${recentData[i].mode ? `Mode: ${recentData[i].mode}\n` : `` }${recentData[i].map ? `Map: ${recentData[i].map}` : `` }`)
+        recentGamesEmbed.addField(`${recentData[i].gameType} at ${new Date(recentData[i].date).toLocaleTimeString()}, ${new Date(recentData[i].date).toLocaleDateString()}`, `${recentData[i].hasOwnProperty('ended') && recentData[i].ended ? `Game Time End: ${new Date(recentData[i].ended).toLocaleTimeString()}\n` : `${i == 1 ? `Game Time End: In progress\n` : `Game Time End: Unknown\n` }` }${recentData[i].hasOwnProperty('ended') && recentData[i].ended ? `Play Time: ${new Date(recentData[i].ended - recentData[i].date).toISOString().substr(11, 8)}\n` : `Play Time Elapsed: ${new Date(new Date() - recentData[i].date).toISOString().substr(11, 8)}\n` }${recentData[i].mode ? `Mode: ${recentData[i].mode}\n` : `` }${recentData[i].map ? `Map: ${recentData[i].map}` : `` }`)
         }
     }
     if (!recentData[0]) {
@@ -42,7 +42,18 @@ module.exports = {
         }
     msg.delete();
     message.reply(recentGamesEmbed);
-    });
+    })
+    .catch((err) => {
+								if (err instanceof FetchError) {
+									msg.delete();
+									message.channel.send(`An error occured on parsing a json. This is occasioanlly expected. Try again later.`);
+									console.log(err);
+								} else {
+									msg.delete();
+									message.channel.send(`An error occured. Please report this: ${err}`);
+									console.log(err);
+								}
+					   		});
     }
 
 
@@ -66,9 +77,14 @@ if (!/(^[\w+]{1,16}$)|(^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{
           recentGameAPI(response.uuid, response.username)
     })
      .catch((err) => {
-              msg.delete()
-                console.log(err);
-     })
+								if (err instanceof FetchError) {
+									message.channel.send(`An error occured on parsing a json. This is occasioanlly expected. Try again later.`);
+									console.log(err);
+								} else {
+									message.channel.send(`An error occured. Please report this: ${err}`);
+									console.log(err);
+								}
+					})
     
     });
 	},
